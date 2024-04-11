@@ -4,13 +4,14 @@ import styles from "../styles/Login.module.css";
 import DirectionBtn from "./DirectionBtn";
 import InputLine from "./InputLine";
 import axios from "axios";
-import { InputProps } from "../interfaces/Interfaces";
+import { InputPasswordProps } from "../interfaces/Interfaces";
+import TitleText from "./TitleText";
 
 
 
 
 
-export default function InputPassword({ userId, setUserId }: InputProps) {
+export default function InputPassword({ userId, setUserIdStatus }: InputPasswordProps) {
     console.log('render InputPassword');
     const [password, setPassword] = useState('');
     const [passwordInputStyle, setPasswordInputStyle] = useState<CSSProperties>({ borderColor: 'black' });
@@ -27,19 +28,18 @@ export default function InputPassword({ userId, setUserId }: InputProps) {
                 <DirectionBtn className={styles.btns} onClick={onBackBtnClick} disabled={false} btnStyle={undefined} btnDirection={'left'} />
                 <p>{userId}</p>
             </section>
-            <p className={styles.text}>비밀번호</p>
-            <InputLine style={passwordInputStyle} type="password" onChange={passwordOnChange} onKeyDown={e => password.length > 5 && onKeyDown(e)} autoFocus={true}></InputLine>
-            <DirectionBtn className={styles.btns} onClick={submitOnClick} disabled={password.length < 6} btnStyle={svgVisiable} btnDirection={'right'} />
+            <TitleText >비밀번호</TitleText>
+            <InputLine value={password} style={passwordInputStyle} type="password" onChange={passwordOnChange} onKeyDown={e => password.length > 5 && onKeyDown(e)} autoFocus={true} placeholder="" disabled={false} />
+            <DirectionBtn className={styles.btns} onClick={submitOnClick} disabled={password.length < 6 || password.length > 20} btnStyle={svgVisiable} btnDirection={'right'} />
         </div>
     );
 
     function onBackBtnClick() {
-        setUserId(undefined);
+        setUserIdStatus({ status: undefined, userId: userId});
     }
 
 
     function passwordOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.value.length < 6 || e.target.value.length > 20) return;
         setPassword(e.target.value);
         setEnterRecorder(false);
     }
@@ -54,6 +54,7 @@ export default function InputPassword({ userId, setUserId }: InputProps) {
 
     }
     async function submitOnClick() {
+        if(password.length < 6 || password.length > 20) return;
         console.log('submitOnClick');
 
         await axios.post('/api/user/pw', { userPw: password }).then(res => {

@@ -8,16 +8,37 @@ export interface DirectionBtnProps {
     btnDirection: string;
 }
 
-export interface InputProps {
-    userId: string | null | undefined,
-    setUserId: React.Dispatch<React.SetStateAction<string | null | undefined>>
+export interface InputIdProps {
+    userId: string;
+    setUserId: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
-export interface InputInputLineProps {
-    style: React.CSSProperties;
+export interface InputPasswordProps {
+    userId: string;
+    setUserIdStatus: React.Dispatch<React.SetStateAction<{ status: number | undefined; userId: string; }>>;
+}
+
+export interface InputUserStatusProps {
+    userIdStatus: { status: number | undefined, userId: string };
+    setUserIdStatus: React.Dispatch<React.SetStateAction<{ status: number | undefined; userId: string; }>>;
+}
+
+export interface InputLineProps {
+    value: string;
+    style: CSSProperties;
     type: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     autoFocus: boolean;
+    placeholder: string;
+    disabled: boolean;
+}
+
+export interface InputLineRegProps extends InputLineProps {
+    className: string | undefined;
+}
+
+export interface InputLineMailProps extends InputLineProps {
+    className: string;
 }
 

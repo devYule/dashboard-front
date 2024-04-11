@@ -157,6 +157,57 @@
     color: #000000;
 }
 
+/* register from - info */
+.loginForm > .info {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    animation: fadeIn 2000ms linear;
+}
+
+.loginForm > .info > input {
+    margin: 10px 0;
+    
+}
+
+.loginForm .placeholder {
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 200;
+}
+
+/* register from - mail */
+.loginForm > .mail{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    animation: fadeIn 2000ms linear;
+}
+.loginForm > .mail > button {
+    width: 20px;
+    height: 20px;
+    margin-top: 5px;
+    margin-right: 7px;
+}
+
+/* register from - code */
+.loginForm > .code{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    animation: fadeIn 2000ms linear;
+}
+.loginForm > .code > :nth-child(3) {
+    margin-top: 20px;
+}
+
+
+
+.loginForm > .code input:disabled {
+    background-color: transparent;
+    color: gray;
+}
+
 
 /*  */
 

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import styles from '../styles/Login.module.css'
 
 export default function About() {
     return (
-        <>
+        <div className={styles.about}>
             <nav>
                 <Link to="https://funky-berry-7ad.notion.site/77cceb76d163485ca5540d1196611071">
                     <svg width="30" height="30" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,6 +27,6 @@ export default function About() {
                     </svg>
                 </Link>
             </nav>
-        </>
+        </div>
     );
 }

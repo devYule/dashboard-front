@@ -9,15 +9,9 @@ export default function LoginContainer() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.logo}>
-                <Logo />
-            </div>
-                <div className={styles.loginForm}>
-                    <LoginForm />
-                </div>
-            <div className={styles.about}>
-                <About />
-            </div>
+            <Logo />
+            <LoginForm />
+            <About />
         </div>
     );
 }
