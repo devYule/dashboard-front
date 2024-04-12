@@ -1,11 +1,9 @@
 import { createContext } from "react";
+import { SidebarActions, SidebarDirections, SidebarSelectedItems } from "../interfaces/Interfaces";
 
-interface User {
-    at: string | undefined | null;
-    userLoginId: string | undefined | null;
-    userNick: string | undefined | null;
-    userMail: string | undefined | null;
-}
 
-export const UserContext = createContext<User | null>(null);
+export const SidebarDirectionContext = createContext(SidebarDirections.NONE);
 
+export const SidebarActionContext = createContext(SidebarActions.HOVER);
+
+export const SidebarSelectedItemContext = createContext(SidebarSelectedItems.ADD_WIDGET);

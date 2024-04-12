@@ -1,7 +1,7 @@
-export default function Logo() {
+export default function MiniLogo() {
     return (
 
-        <svg width="130" height="129" viewBox="0 0 223 129" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg  viewBox="0 0 223 129" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_10_5933)">
                 <rect y="101" width="131" height="28" fill="#B2EEB5" />
             </g>

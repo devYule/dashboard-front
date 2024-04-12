@@ -1,4 +1,4 @@
-import { InputLineProps } from "../interfaces/Interfaces";
+import { InputLineProps } from "../../../interfaces/Interfaces";
 
 export default function InputLine({ value, style: inputColorStyle, type: inputType, onChange: idOnChange, onKeyDown, autoFocus, placeholder, disabled = false }: InputLineProps) {
     return (

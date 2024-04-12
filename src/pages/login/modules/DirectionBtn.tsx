@@ -1,4 +1,4 @@
-import { DirectionBtnProps } from "../interfaces/Interfaces";
+import { DirectionBtnProps } from "../../../interfaces/Interfaces";
 
 
 

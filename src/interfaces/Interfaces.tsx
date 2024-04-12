@@ -42,3 +42,18 @@ export interface InputLineMailProps extends InputLineProps {
     className: string;
 }
 
+export enum SidebarActions {
+    NEAR = 'near',
+    HOVER = 'hover',
+    CLICK = 'click',
+}
+
+export enum SidebarDirections {
+    NONE = 'none',
+    RIGHT = 'right',
+    LEFT = 'left',
+}
+
+export enum SidebarSelectedItems {
+    ADD_WIDGET, BOOKMARK, MYPAGE, LOGOUT
+}

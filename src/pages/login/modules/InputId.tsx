@@ -2,7 +2,7 @@ import { CSSProperties, useState } from "react";
 import styles from '../styles/Login.module.css'
 import InputLine from "./InputLine";
 import axios from "axios";
-import { InputUserStatusProps } from "../interfaces/Interfaces";
+import { InputUserStatusProps } from "../../../interfaces/Interfaces";
 import TitleText from "./TitleText";
 
 

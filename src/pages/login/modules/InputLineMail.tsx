@@ -1,4 +1,4 @@
-import { InputLineMailProps } from "../interfaces/Interfaces";
+import { InputLineMailProps } from "../../../interfaces/Interfaces";
 
 export default function InputLineMail({ className, value, style: inputColorStyle, type: inputType, onChange: idOnChange, onKeyDown, autoFocus, placeholder, disabled = false }: InputLineMailProps) {
     return (

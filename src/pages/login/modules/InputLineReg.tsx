@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { InputLineRegProps } from "../interfaces/Interfaces";
+import { InputLineRegProps } from "../../../interfaces/Interfaces";
 
 const InputLineReg = forwardRef<HTMLInputElement, InputLineRegProps>(({ value, className, style: inputColorStyle, type: inputType, onChange: idOnChange, onKeyDown, autoFocus, placeholder }: InputLineRegProps, ref) => {
     return (

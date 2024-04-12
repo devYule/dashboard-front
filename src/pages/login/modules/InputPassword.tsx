@@ -4,7 +4,7 @@ import styles from "../styles/Login.module.css";
 import DirectionBtn from "./DirectionBtn";
 import InputLine from "./InputLine";
 import axios from "axios";
-import { InputPasswordProps } from "../interfaces/Interfaces";
+import { InputPasswordProps } from "../../../interfaces/Interfaces";
 import TitleText from "./TitleText";
 
 
