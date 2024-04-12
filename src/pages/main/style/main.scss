@@ -1,6 +1,45 @@
 // 
+// ------------------------------------------------- @mixins -------------------------------------------------
+//
+
+@mixin sidebarBackgorund {
+    background-color: rgb(234, 238, 219);
+}
+
+@mixin widgetRadius {
+    border-radius: 5px;
+}
+
+@mixin sidebarStyle {
+    @include sidebarBackgorund;
+
+    min-width: 355px;
+
+    height: 100vh;
+    // width: 25vh;
+    width: 25%;
+    
+    backdrop-filter: blur(10px);
+    // filter: blur(10px);
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+    flex-direction: column;
+    align-items: center;
+}
+
+// 
+// ------------------------------------------------- @mixins -------------------------------------------------
+// 
+
+// 
 // right sidebar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ------------------------------------------
 // 
+
 *>.sidebarBtns {
     width: 30px;
     position: fixed;
@@ -15,31 +54,11 @@
     }
 }
 
-
 *>.rightSidebar {
-
-    min-width: 355px;
-
-    height: 100vh;
-    // width: 25vh;
-    width: 25%;
-
-    background-color: rgb(234, 238, 219);
-    backdrop-filter: blur(10px);
-    // filter: blur(10px);
-    position: fixed;
-    top: 0;
-    right: 0;
-
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-y: scroll;
-    flex-direction: column;
-    align-items: center;
-
+    @include sidebarStyle;
 
     .sidebarText {
-        background-color: rgb(234, 238, 219);
+        @include sidebarBackgorund;
         width: 100%;
         position: sticky;
         top: 0;
@@ -64,7 +83,7 @@
         gap: 10px 10px;
 
         * {
-            border-radius: 5px;
+            @include widgetRadius;
         }
 
         :nth-child(1) {
@@ -187,7 +206,7 @@
 
 
         .widgetContainer {
-            margin: 0 0 70px 0;
+            margin: 0 40px 70px 40px;
 
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
@@ -195,7 +214,7 @@
             justify-content: center;
 
             .widget-item {
-                border-radius: 5px;
+                @include widgetRadius;
                 border: 1px solid red;
                 min-height: 166.4px;
             }
@@ -204,188 +223,3 @@
 
 
 }
-
-
-
-
-
-
-// .mainContainer {
-
-//     display: grid;
-//     grid-template-columns: minmax(375px, 100vw);
-//     grid-template-rows: minmax(120px, 20vh) 80vh;
-
-//     .header {
-//         border: 5px solid black;
-//         justify-self: center;
-
-
-//     }
-
-//     .main {
-
-//         grid-row: 2 / 2;
-//         height: 100%;
-//         width: 100%;
-
-//         border: 5px solid black;
-//         // display: grid;
-//         // grid-template-columns: repeat(6, 16.66666%);
-//         // grid-template-rows: repeat(4, 25%);
-//         // justify-self: center;
-//         // align-self: center;
-
-//         display: grid;
-//         grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
-//         gap: 15px 15px;
-//         justify-content: center;
-
-
-//         #searchBarItem {
-//             position: sticky;
-//             align-self: center;
-//             // justify-self: center;
-//             grid-column: 1 / 7;
-
-//             background: url(../../../../resources/img/main/searchBtn.svg) no-repeat;
-//             background-position: center right 1%;
-//             // margin: 0 110px;
-//             min-width: 30%;
-//             max-width: 60%;
-//             height: 50px;
-//             border: 2px solid black;
-//             filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-//             /*  */
-//             display: flex;
-//             flex-grow: 1;
-//             flex-direction: row;
-//             justify-content: center;
-//             align-items: center;
-
-
-//             input {
-//                 border: 0px;
-//                 background: none;
-//                 width: 88%;
-//                 height: 97%;
-//                 margin: 0 7px;
-
-//                 justify-self: start;
-//             }
-
-//             input:focus {
-//                 outline: none;
-//             }
-
-
-//         }
-
-//         .widgetContainer {
-
-//             grid-column: 1 / span 6;
-//             grid-row: 2 / sapn 6;
-//             border: 5px solid black;
-
-//             display: grid;
-//             grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
-//             gap: 15px 15px;
-//             justify-content: center;
-
-//             .widget-item {
-//                 border: 1px solid red;
-//                 min-height: 100.4px;
-//                 height: 100%;
-//             }
-//         }
-//     }
-
-
-// }
-
-
-
-// .mainContainer {
-
-//     display: grid;
-//     grid-template-columns: minmax(375px, 100vw);
-//     grid-template-rows: minmax(120px, 20vh) 80vh;
-
-//     .header {
-//         border: 5px solid black;
-//         justify-self: center;
-
-
-//     }
-
-//     .main {
-//         border: 5px solid black;
-//         display: grid;
-//         grid-template-columns: repeat(6, 16.66666%);
-//         grid-template-rows: repeat(4, 25%);
-
-//         .searchBar {
-//             grid-column: 1 / span 6;
-//             border: 5px solid black;
-
-//             width: 100%;
-//             height: 100%;
-//             justify-self: center;
-//             align-self: center;
-//             /*  */
-//             display: flex;
-//             flex-direction: row;
-//             justify-content: center;
-//             align-items: center;
-//             max-width: 600px;
-//             max-height: 100%;
-
-//             div {
-//                 input {
-//                     border: 0px;
-//                     background: none;
-//                     width: 88%;
-//                     height: 97%;
-//                     margin: 0 7px;
-
-//                     justify-self: start;
-//                 }
-
-//                 input:focus {
-//                     outline: none;
-//                 }
-
-//                 background: url(../../../../resources/img/main/searchBtn.svg) no-repeat;
-//                 background-position: center right 1%;
-//                 display: flex;
-//                 flex-direction: column;
-//                 flex-grow: 1;
-//                 margin: 0 110px;
-//                 min-width: 300px;
-//                 max-width: 500px;
-//                 height: 30px;
-//                 border: 2px solid black;
-//                 filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-//             }
-//         }
-
-//         .widgetContainer {
-//             grid-column: 1 / span 6;
-//             grid-row: 2 / sapn 6;
-//             border: 5px solid black;
-
-//             display: grid;
-//             grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
-
-//             gap: 15px 15px;
-//             justify-content: center;
-
-//             .widget-item {
-//                 border: 1px solid red;
-//                 min-height: 100.4px;
-//                 height: 100%;
-//             }
-//         }
-//     }
-// }
