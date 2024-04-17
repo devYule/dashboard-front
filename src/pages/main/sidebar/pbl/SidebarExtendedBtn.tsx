@@ -1,9 +1,0 @@
-export default function SidebarExtendedBtn() {
-    return (
-        <div className="sidebarExtendedBtn sidebarBtns">
-            <button id="btn">
-                <svg viewBox="0 0 60 380" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="2.5" width="55" height="375" rx="17.5" fill="black" /><rect x="2.5" y="2.5" width="55" height="375" rx="17.5" stroke="black" stroke-width="5" /><rect x="7" y="35" width="46" height="47" rx="15" fill="#E9E9E9" /><rect x="7" y="110" width="46" height="47" rx="15" fill="#E9E9E9" /><rect x="7" y="223" width="46" height="47" rx="15" fill="#E9E9E9" /><rect x="7" y="298" width="46" height="47" rx="15" fill="#E9E9E9" /><rect x="7.38525" y="185.5" width="46.2131" height="9" rx="4.5" fill="#E9E9E9" stroke="black" /></svg>
-            </button>
-        </div>
-    )
-}

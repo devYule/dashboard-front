@@ -1,16 +1,20 @@
-// 
-// ------------------------------------------------- @mixins -------------------------------------------------
-//
+p {
+    margin: 0;
+}
+hr {
+    width: 60vw;
+    height: 1px;
+    background-color: rgb(234, 238, 219);
+    border: none;
+    position: relative;
+    left: -30px;
+}
 
 @mixin sidebarBackgorund {
     background-color: rgb(234, 238, 219);
 }
 
-@mixin widgetRadius {
-    border-radius: 5px;
-}
-
-@mixin sidebarStyle {
+@mixin basicSidebarStyle {
     @include sidebarBackgorund;
 
     min-width: 355px;
@@ -23,7 +27,7 @@
     // filter: blur(10px);
     position: fixed;
     top: 0;
-    right: 0;
+    // right: 0;
 
     display: flex;
     flex-wrap: nowrap;
@@ -32,24 +36,211 @@
     align-items: center;
 }
 
-*>.pointer {
-    cursor: pointer;
+@mixin sidebarStyle {
+    @include basicSidebarStyle;
+    right: 0;
 }
 
-* {
-    list-style-type: none;
+@mixin leftSidebarStyle {
+    @include basicSidebarStyle;
+    left: 0;
 }
 
-* {
-    padding: 0;
+@mixin widgetRadius {
+    border-radius: 5px;
 }
 
 // 
-// ------------------------------------------------- @mixins -------------------------------------------------
-// 
+.searchContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
+    width: 100vw;
+
+    .miniHeader{
+        position: inherit;
+    }
+    .fullHeader {
+        position: sticky;
+    }
+
+    .header {
+        z-index: 1;
+        // position: sticky;
+        top: 0;
+        background-color: rgb(238, 238, 238);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+        align-items: center;
+
+        .logo {
+            margin-top: 10px;
+            margin-left: calc(100vw / 13);
+            width: 30%;
+            min-width: 50px;
+
+        }
+
+        .searchBar {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            grid-column: 2/3;
+            justify-self: center;
+
+            #searchBarItem {
 
 
-.mainContainer {
+
+                width: 30vw;
+                min-width: 120px;
+
+
+                border: 2px solid black;
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+                /*  */
+                input {
+                    bottom: 0px;
+                    border: 0px;
+                    background: none;
+                    width: 80%;
+                    margin: 2px 7px;
+                    font-size: 18px;
+
+                }
+
+                input:focus {
+                    outline: none;
+                }
+
+                .searchBtn {
+                    width: 20px;
+                    position: absolute;
+                    right: 1%;
+                    bottom: 1%;
+                    background: transparent;
+                    border: none;
+                }
+
+
+            }
+        }
+
+    }
+
+    .main {
+        margin: 7% 0 1% 0;
+        align-self: center;
+        // border: 1px solid black;
+
+        width: 75%;
+
+        .contentsContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+
+            .content {
+                margin: 10px 0;
+
+                .title {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 800;
+                    font-size: 25px;
+
+                    // line-height: 36px;
+                    .bookmarkBtns {
+                        margin-left: 15px;
+                        width: 15px;
+                        background: transparent;
+                        border: none;
+                    }
+                }
+
+                .text {
+                    margin: 7px 0;
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 15px;
+                    // line-height: 36px;
+                }
+            }
+
+        }
+    }
+
+    .leftSidebarContainer {
+        position: fixed;
+
+        width: 40px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        z-index: 3;
+        // background-color: gray;
+
+
+        .sidebarBtns {
+            position: absolute;
+            top: 30%;
+
+            z-index: 2;
+
+            width: 30px;
+            height: 30px;
+
+            #btn {
+                width: 30px;
+                height: 30px;
+                background: transparent;
+                border: none;
+            }
+
+            :hover {
+                cursor: pointer;
+            }
+        }
+
+        .leftSidebar {
+
+            @include leftSidebarStyle;
+
+            .leftSidebarWidgetContainer {
+                // width: 300px;
+                height: 95%;
+                display: grid;
+                justify-content: center;
+
+                gap: 10px;
+                // grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(130px, 130px));
+
+                margin: 20% 0;
+
+
+                display: grid;
+                overflow-y: scroll;
+                grid-template-columns: repeat(2, 120px);
+                grid-template-rows: repeat(auto-fill, minmax(120px, 120px));
+                gap: 10px;
+
+                .widget {
+                    border: 1px solid black;
+                    width: 118px;
+                    height: 118px;
+                    @include widgetRadius;
+                }
+            }
+        }
+
+
+    }
 
     .rightSidebarContainer {
         // display: flex;
@@ -59,19 +250,19 @@
         position: fixed;
 
         width: 40px;
-        height: 100%;
+        height: 100vh;
         position: fixed;
         top: 0;
         right: 0;
 
         z-index: 3;
-
         // background-color: gray;
+
         .sidebarTooltip {
             position: fixed;
             top: 30%;
             height: 165px;
-            width: 130px;
+            width: 100px;
             // background-color: green;
             position: fixed;
             right: 50px;
@@ -123,8 +314,8 @@
             // right: 50%;
 
             #btn {
-                width: 100%;
-                height: 100%;
+                width: 30px;
+                height: 30px;
                 background: transparent;
                 border: none;
             }
@@ -172,7 +363,6 @@
                     height: 25px;
                     background: rgb(245, 245, 245);
                 }
-
             }
 
             .middleSection {
@@ -207,7 +397,7 @@
 
             .sidebarText {
                 @include sidebarBackgorund;
-                width: 100%;
+                // width: 100%;
                 position: sticky;
                 top: 0;
                 font-family: 'Inter';
@@ -338,101 +528,5 @@
 
             }
         }
-
-
-
     }
-
-    display: flex;
-    flex-direction: column;
-
-
-    .header {
-        align-self: center;
-    }
-
-    .main {
-
-        align-self: center;
-
-        height: 100%;
-        width: 100%;
-
-
-        display: flex;
-        flex-direction: column;
-
-
-
-
-        .searchBar {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-            background-color: white;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            height: 90px;
-
-            margin-bottom: 70px;
-
-            #searchBarItem {
-                min-width: 265px;
-                width: 35%;
-                height: 100%;
-                margin: 28px 0;
-                border: 2px solid black;
-                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-                /*  */
-                input {
-                    position: absolute;
-                    bottom: 0px;
-                    border: 0px;
-                    background: none;
-                    width: 85%;
-                    height: 100%;
-                    margin: 0 7px;
-                    font-size: 18px;
-
-                }
-
-                input:focus {
-                    outline: none;
-                }
-
-                .searchBtn {
-                    width: 20px;
-                    position: absolute;
-                    right: 1%;
-                    bottom: 1%;
-                    background: transparent;
-                    border: none;
-                }
-
-
-            }
-        }
-
-        .widgetContainer {
-            margin: 0 60px 70px 60px;
-
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
-            gap: 15px;
-            justify-content: center;
-
-            .widget-item {
-                @include widgetRadius;
-                border: 1px solid red;
-                min-height: 166.4px;
-            }
-        }
-    }
-
-
 }

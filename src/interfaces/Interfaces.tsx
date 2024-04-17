@@ -43,9 +43,12 @@ export interface InputLineMailProps extends InputLineProps {
 }
 
 export enum SidebarActions {
+    NONE = 'none',
     NEAR = 'near',
     HOVER = 'hover',
     CLICK = 'click',
+    WIDGET = 'widget',
+    BOOKMARK = 'bookmark',
 }
 
 export enum SidebarDirections {
@@ -56,4 +59,23 @@ export enum SidebarDirections {
 
 export enum SidebarSelectedItems {
     ADD_WIDGET, BOOKMARK, MYPAGE, LOGOUT
+}
+
+export enum SidebarHover {
+    ON = 'on', OFF = 'off'
+}
+
+export enum LeftSidebarActions {
+    NONE = 'none',
+    NEAR = 'near',
+    CLICK = 'click',
+}
+
+export interface WidgetInter {
+    id: number;
+    order: number;
+    width: number;
+    height: number;
+    url: string;
+    isShown: boolean;
 }

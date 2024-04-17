@@ -1,9 +1,9 @@
 <svg width="650" height="120" viewBox="0 0 650 120" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_10_2758)">
-<rect x="36.5" y="23.5" width="577" height="72" rx="18.5" stroke="black" stroke-width="3" shape-rendering="crispEdges"/>
+<rect x="36.5" y="23.5" width="577" height="72" rx="18.5" stroke="black" strokeWidth="3" shape-rendering="crispEdges"/>
 </g>
 <circle cx="584.5" cy="56.5" r="7" stroke="black"/>
-<path d="M590.937 59.4021C592.644 61.1085 594.616 63.0807 596.413 64.878C597.39 65.8543 597.39 67.4371 596.413 68.4134V68.4134C595.437 69.3897 593.854 69.3897 592.878 68.4134C591.047 66.5829 589.035 64.5709 587.308 62.8432" stroke="black" stroke-linejoin="round"/>
+<path d="M590.937 59.4021C592.644 61.1085 594.616 63.0807 596.413 64.878C597.39 65.8543 597.39 67.4371 596.413 68.4134V68.4134C595.437 69.3897 593.854 69.3897 592.878 68.4134C591.047 66.5829 589.035 64.5709 587.308 62.8432" stroke="black" strokeLinejoin="round"/>
 <defs>
 <filter id="filter0_d_10_2758" x="31" y="22" width="588" height="83" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>

@@ -1,24 +1,24 @@
 import { Route, Routes } from "react-router-dom";
 import LoginContainer from "./pages/login/LoginContainer";
-import Main from "./pages/main/MainContainer";
-import SidebarHoverBtn from "./pages/main/sidebar/pbl/SidebarHoverBtn";
-import SidebarClickBtn from "./pages/main/sidebar/pbl/SidebarClickBtn";
-import SidebarExtendedBtn from "./pages/main/sidebar/pbl/SidebarExtendedBtn";
-import SidebarRight from "./pages/main/sidebar/right/SidebarRight";
+import SketchBook from "./SketchBook";
+import MainContainer from "./pages/main/MainContainer";
+import MypageConatiner from "./pages/mypage/mypageAndSearch/MypageContainer";
+import '../src/pages/main/style/main.scss';
+import '../src/pages/mypage/styles/mypage.scss';
+import SearchContainer from "./pages/search/SearchContainer";
 
 const App = () => {
 
   return (
     <Routes>
       <Route path="/" element={<LoginContainer />} />
-      <Route path="/main" element={<Main />} />
+      <Route path="/main" element={<MainContainer />} />
+      <Route path="/mypage" element={<MypageConatiner />} />
+      <Route path="/search" element={<SearchContainer />} />
 
       {/* for test */}
-      <Route path="/test" element={<SidebarHoverBtn />} />
-      <Route path="/test2" element={<SidebarClickBtn />} />
-      <Route path="/test3" element={<SidebarExtendedBtn />} />
-      <Route path="/test4" element={<SidebarRight />} />
-      
+      <Route path="/test" element={<SketchBook />} />
+
     </Routes>
   );
 }

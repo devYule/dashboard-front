@@ -1,0 +1,238 @@
+p {
+    margin: 0;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+// 
+.mypageContainer {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+
+    .header {
+        .logo {
+            margin-bottom: 30px;
+            min-width: 100px;
+            max-width: 155px;
+            width: 15vw;
+        }
+    }
+
+    .main {
+        min-width: 131px;
+
+        .info {
+            #title {
+                grid-column: 1 / 3;
+                font-family: 'Inter';
+                font-style: normal;
+                text-align: left;
+                font-weight: 800;
+                font-size: 25px;
+            }
+
+            gap: calc(100vh / 35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .circle {
+                flex-direction: column;
+
+                border: 1px solid black;
+                height: calc(100vh / 4);
+                width: calc(100vh / 4);
+                min-width: 200px;
+                min-height: 200px;
+                max-width: 250px;
+                max-height: 250px;
+                border-radius: 50%;
+
+                #pic {
+                    border-radius: 50%;
+                    height: 100%;
+                    width: 100%;
+                }
+
+            }
+
+            #file {
+                display: none;
+            }
+
+            .nickAndMail {
+                display: flex;
+                flex-direction: column;
+                align-self: end;
+
+                #nick {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    text-align: right;
+                    font-weight: 800;
+                    font-size: 20px;
+
+                }
+
+                #mail {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    text-align: right;
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 30px;
+                }
+            }
+
+            .sites {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                // background-color: blue;
+                width: 100%;
+
+                .lastBox {
+                    border: 1px solid white;
+                    height: 39px;
+                }
+
+                .eachBox {
+                    border: 1px solid black;
+                    height: 39px;
+                }
+
+                .box {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: start;
+                    align-items: center;
+                    gap: 50px;
+                    width: 180px;
+
+                    svg {
+                        width: 100px;
+
+                    }
+
+                    .minusBtn {
+                        margin-left: 5px;
+                    }
+
+                    #addInput {
+                        margin-left: 7px;
+                        width: 98px;
+                        outline: none;
+                        border: 1px solid black;
+                        border-top: 0;
+                        border-left: 0;
+                        border-right: 0;
+                        font-size: 12px;
+
+                    }
+
+                    .totalBtns {
+                        border: 1px solid #000000;
+                        background-color: white;
+                        color: black;
+
+                        width: 20px;
+                        height: 20px;
+
+                        font-family: 'Inter';
+                        text-align: center;
+                        font-weight: 200;
+                        font-size: 22px;
+                        line-height: 21px;
+
+                    }
+
+                }
+
+
+                .dropDown {
+                    z-index: 1;
+                    background-color: antiquewhite;
+                    position: relative;
+                    top: -10px;
+                    left: 5px;
+                    width: 120px;
+                    min-height: 10px;
+
+                    border: 1px solid black;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+
+                    .dropDownItemBtns {
+                        background: transparent;
+                        border: none;
+
+                        svg {
+                            height: 40px;
+                            margin-right: 10px;
+
+                        }
+
+                    }
+
+                    #empty {
+                        font-family: 'Inter';
+                        font-style: normal;
+                        text-align: left;
+                        font-weight: 300;
+                        font-size: 14px;
+                        margin: 8px;
+
+                    }
+                }
+
+                .lastGrp {
+                    height: 41px;
+                }
+            }
+
+            .dangerZone {
+                width: 100%;
+
+                #title {
+                    grid-column: 1 / 4;
+                }
+
+                .part {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+
+                    border: 1px solid red;
+                    height: 70px;
+                    width: 100%;
+
+
+
+                    .btns {
+                        background-color: black;
+                        border: 1px solid black;
+                        height: 30px;
+                        width: 100px;
+                        margin: 10px;
+
+                        font-family: 'Inter';
+                        text-align: center;
+                        font-weight: 800;
+                        font-size: 12px;
+                        line-height: 21px;
+                        color: rgb(245, 245, 245);
+                        border-radius: 15px;
+
+                    }
+                }
+            }
+        }
+    }
+}

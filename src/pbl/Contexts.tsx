@@ -1,9 +1,11 @@
-import { createContext } from "react";
-import { SidebarActions, SidebarDirections, SidebarSelectedItems } from "../interfaces/Interfaces";
+import { Dispatch, SetStateAction, createContext } from "react";
+import { LeftSidebarActions, SidebarActions } from "../interfaces/Interfaces";
 
 
-export const SidebarDirectionContext = createContext(SidebarDirections.NONE);
+export const SidebarActionContext = createContext<Dispatch<SetStateAction<SidebarActions>>>(() => { });
+export const SidebarDirectionContext = createContext(null);
+export const SidebarSelectedItemContext = createContext(null);
 
-export const SidebarActionContext = createContext(SidebarActions.HOVER);
+export const LeftSidebarActionContext = createContext<Dispatch<SetStateAction<LeftSidebarActions>>>(() => { });
 
-export const SidebarSelectedItemContext = createContext(SidebarSelectedItems.ADD_WIDGET);
+
