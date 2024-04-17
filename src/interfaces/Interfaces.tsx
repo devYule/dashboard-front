@@ -79,3 +79,7 @@ export interface WidgetInter {
     url: string;
     isShown: boolean;
 }
+
+export enum ModalType {
+    NONE, CHANGE_PASSWORD, RESET_WIDGET, WITHDRAW
+}
