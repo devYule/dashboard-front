@@ -111,6 +111,7 @@ export default function UserSites() {
     const [isClicked, setIsClicked] = useState<boolean>(false);
     const [isFocus, setIsFocus] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
+    const [animationInit, setAnimationInit] = useState<number>(Math.random());
 
     const btnStyle: CSSProperties = {
         visibility: isHoverLastIdx ? 'visible' : 'hidden',
@@ -141,7 +142,7 @@ export default function UserSites() {
                     </div>
                 )
             })}
-            <section className="lastGrp">
+            <section className="lastGrp" key={animationInit}>
                 <div className={clickClassName} onMouseEnter={onMouseEnterBtn} onMouseLeave={onMouseLeaveBtn}>
                     <input id="addInput" style={clickStyle}
                         onFocus={onFocusInput}
@@ -182,6 +183,7 @@ export default function UserSites() {
         if (isFocus) return;
         setIsHoverLastIdx(false);
         setIsClicked(false);
+        setAnimationInit(Math.random());
     }
     function onClickBtn() {
         console.log('event3');
@@ -198,6 +200,7 @@ export default function UserSites() {
             setIsHoverLastIdx(false);
             setIsClicked(false);
             setInputValue('');
+            setAnimationInit(Math.random());
         }, 150);
     }
     function dropDownOnClick(siteId: number) {

@@ -5,6 +5,8 @@ import MainContainer from "./pages/main/MainContainer";
 import MypageConatiner from "./pages/mypage/mypageAndSearch/MypageContainer";
 import '../src/pages/main/style/main.scss';
 import '../src/pages/mypage/styles/mypage.scss';
+import './pbl/animator.scss';
+import '../src/pages/search/styles/search.scss';
 import SearchContainer from "./pages/search/SearchContainer";
 
 const App = () => {

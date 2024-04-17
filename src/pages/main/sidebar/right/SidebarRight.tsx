@@ -17,7 +17,7 @@ const initBookmarks: Bookmkarks[] = [
     { id: 2, title: "Daum", url: "https://www.daum.net", memo: "다음" }
 ]
 
-export default function SidebarRight({ type }: { type: SidebarActions }) {
+export default function SidebarRight({ type, rand }: { type: SidebarActions, rand: number }) {
 
 
     const setSidebarAction = useContext(SidebarActionContext);
@@ -28,7 +28,7 @@ export default function SidebarRight({ type }: { type: SidebarActions }) {
         <>
             {
                 type === SidebarActions.WIDGET ? (
-                    <div className="rightSidebar">
+                    <div className="rightSidebar" key={rand}>
                         {/* WIDGET 일 경우 */}
                         <p className="sidebarText">위젯 추가</p>
                         <div className="gridContainer widget">
@@ -48,7 +48,7 @@ export default function SidebarRight({ type }: { type: SidebarActions }) {
                         </div>
                     </div>
                 ) : (
-                    <div className="rightSidebar">
+                    <div className="rightSidebar" key={rand}>
                         {/* BOOKMARK 일 경우 */}
                         <p className="sidebarText">북마크</p>
                         <div className="gridContainer bookmark">

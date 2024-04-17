@@ -1,0 +1,141 @@
+@keyframes moveFromRightToLeft {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@mixin moveFromRightToLeft {
+    animation: moveFromRightToLeft 100ms linear;
+}
+
+@keyframes moveFromLeftToRight {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@mixin moveFromLeftToRight {
+    animation: moveFromLeftToRight 100ms linear;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@mixin fadeIn {
+    animation: fadeIn 500ms linear;
+}
+
+@keyframes rotateClock {
+    0% {
+        transform: rotate(-45deg);
+    }
+
+    100% {
+        transform: rotate(0);
+    }
+
+}
+
+@mixin ratateClock {
+    animation: rotateClock 100ms linear;
+}
+
+@keyframes extends {
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+
+}
+
+@mixin extends {
+    animation: extends 1000ms linear;
+}
+
+@keyframes zoomAndOrigin {
+    0% {
+        transform: scale(0.5);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@mixin zoomAndOrigin {
+    animation: zoomAndOrigin 200ms linear;
+
+}
+
+
+
+
+
+
+
+.header {
+    @include fadeIn;
+}
+
+.sidebarHoverBtn {
+    @include moveFromRightToLeft;
+}
+
+.sidebarClickBtn {
+    @include ratateClock;
+}
+
+.sidebarExtendedContainer {
+    // @include extends;
+    @include moveFromRightToLeft;
+}
+
+.rightSidebar {
+    @include moveFromRightToLeft;
+}
+
+.main {
+    @include fadeIn;
+}
+
+.leftSidebarHoverBtn {
+    @include moveFromLeftToRight;
+}
+
+.leftSidebar {
+    @include moveFromLeftToRight;
+}
+
+#checkAni {
+    @include zoomAndOrigin;
+}
+
+.sites {
+
+    .eachBox,
+    #btn {
+        @include fadeIn;
+    }
+}

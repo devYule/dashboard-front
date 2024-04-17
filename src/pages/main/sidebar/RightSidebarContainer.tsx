@@ -9,10 +9,12 @@ import SidebarRight from "./right/SidebarRight";
 export default function RightSidebarContainer() {
     const [rightSidebarAction, setSidebarAction] = useState<SidebarActions>(SidebarActions.NONE);
     console.log('SidebarMainContainer');
+    const [animationInit, setAnimationInit] = useState<number>(Math.random());
+
 
     return (
         <div className="rightSidebarContainer" onMouseEnter={rightSidebarOnMouseEnter} onMouseLeave={rightSidebarOnMouseLeave}>
-            <SidebarActionContext.Provider value={setSidebarAction}>
+            <SidebarActionContext.Provider value={setSidebarAction} key={animationInit}>
                 {rightSidebarAction === SidebarActions.NEAR ? (
                     <SidebarHoverBtn />
                 )
@@ -24,7 +26,7 @@ export default function RightSidebarContainer() {
                             <SidebarExtendedBtn />
                         )
                             : rightSidebarAction === SidebarActions.WIDGET || rightSidebarAction === SidebarActions.BOOKMARK ? (
-                                <SidebarRight type={rightSidebarAction} />
+                                <SidebarRight type={rightSidebarAction} rand={animationInit} />
                             )
                                 :
                                 <></>
@@ -41,5 +43,6 @@ export default function RightSidebarContainer() {
     }
     function rightSidebarOnMouseLeave() {
         setSidebarAction(SidebarActions.NONE);
+        setAnimationInit(Math.random());
     }
 }

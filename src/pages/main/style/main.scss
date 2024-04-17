@@ -2,46 +2,47 @@
 // ------------------------------------------------- @mixins -------------------------------------------------
 //
 
+
 @mixin sidebarBackgorund {
-    background-color: rgb(234, 238, 219);
+  background-color: rgb(234, 238, 219);
 }
 
 @mixin widgetRadius {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 @mixin sidebarStyle {
-    @include sidebarBackgorund;
+  @include sidebarBackgorund;
 
-    min-width: 355px;
+  min-width: 355px;
 
-    height: 100vh;
-    // width: 25vh;
-    width: 25%;
+  height: 100vh;
+  // width: 25vh;
+  width: 25%;
 
-    backdrop-filter: blur(10px);
-    // filter: blur(10px);
-    position: fixed;
-    top: 0;
-    right: 0;
+  backdrop-filter: blur(10px);
+  // filter: blur(10px);
+  position: fixed;
+  top: 0;
+  right: 0;
 
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-y: auto;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: auto;
+  flex-direction: column;
+  align-items: center;
 }
 
 *>.pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 * {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 * {
-    padding: 0;
+  padding: 0;
 }
 
 // 
@@ -51,388 +52,386 @@
 
 .mainContainer {
 
-    .rightSidebarContainer {
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: center;
-
-        position: fixed;
-
-        width: 40px;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        right: 0;
-
-        z-index: 3;
-
-        // background-color: gray;
-        .sidebarTooltip {
-            position: fixed;
-            top: 30%;
-            height: 165px;
-            width: 130px;
-            // background-color: green;
-            position: fixed;
-            right: 50px;
-
-            p {
-                margin: 0;
-                font-family: 'Inter';
-                font-style: normal;
-                text-align: right;
-                font-weight: 800;
-                font-size: 16px;
-                line-height: 23.5px;
-
-                right: 0;
-                position: absolute;
-            }
-
-            #m {
-                // top: 32.7%;
-
-                top: 7%;
-            }
-
-            #l {
-                top: 28.5%;
-            }
-
-            #b {
-                top: 60%;
-            }
-
-            #w {
-                top: 81%;
-            }
-        }
-
-        .sidebarBtns {
-            position: absolute;
-            top: 30%;
-
-            // rightSidebarContainer 에 onMouseEnter 이벤트 발생한 상황에서, 해당 버튼으로 마우스가 올라가면,
-            // rightSidebarContainer 의 onMouseLeave 이벤트가 발생하게 되므로, z-index 를 통해 버튼이 컨테이너 위에 위치하도록 함.
-            z-index: 2;
-
-            width: 30px;
-            height: 30px;
-            // position: absolute;
-            // top: 30%;
-            // right: 50%;
-
-            #btn {
-                width: 100%;
-                height: 100%;
-                background: transparent;
-                border: none;
-            }
-
-            :hover {
-                cursor: pointer;
-            }
-        }
-
-        .sidebarExtendedContainer {
-            position: fixed;
-            top: 30%;
-            width: 30px;
-            border-radius: 10px;
-            background-color: #000000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+  display: flex;
+  flex-direction: column;
 
 
-            button {
-                border: 1px solid black;
-            }
+  .header {
+    align-self: center;
+  }
 
-            p {
-                margin: 0;
-                font-family: 'Inter';
-                font-style: normal;
-                text-align: center;
-                font-weight: 800;
-                font-size: 17px;
-                line-height: 23.5px;
-            }
+  .main {
+    align-self: center;
 
-            .upperSection {
-                margin-top: 5px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+    height: 100%;
+    width: 100%;
 
-                button {
-                    margin: 5px 0;
-                    border-radius: 7px;
-                    width: 25px;
-                    height: 25px;
-                    background: rgb(245, 245, 245);
-                }
-
-            }
-
-            .middleSection {
-                .separator {
-                    border-radius: 3px;
-                    margin: 6px 0;
-                    height: 4px;
-                    width: 25px;
-                    background-color: rgb(245, 245, 245);
-                }
-            }
-
-            .lowerSection {
-
-                margin-bottom: 5px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-
-                button {
-                    margin: 5px 0;
-                    border-radius: 7px;
-                    width: 25px;
-                    height: 25px;
-                    background: rgb(245, 245, 245);
-                }
-            }
-        }
-
-        .rightSidebar {
-            @include sidebarStyle;
-
-            .sidebarText {
-                @include sidebarBackgorund;
-                width: 100%;
-                position: sticky;
-                top: 0;
-                font-family: 'Inter';
-                font-style: normal;
-                text-align: center;
-                font-weight: 800;
-                font-size: 18px;
-                line-height: 36px;
-
-                color: #000000;
-
-                margin-top: 7%;
-            }
-
-            .widget {
-                margin-bottom: 9%;
-
-                display: grid;
-                grid-template-columns: repeat(2, 120px);
-                grid-template-rows: repeat(5, 120px);
-                gap: 10px 10px;
-
-                * {
-                    @include widgetRadius;
-                }
-
-                :nth-child(1) {
-                    grid-row: 1 / 2;
-                    grid-column: 1 / 3;
-                    background-color: yellow;
-                }
-
-                :nth-child(2) {
-                    grid-row: 2 / 4;
-                    grid-column: 1 / 3;
-                    background-color: blue;
-                }
-
-                :nth-child(3) {
-                    grid-row: 4 / 5;
-                    grid-column: 1 / 2;
-                    background-color: black;
-                }
-
-                :nth-child(4) {
-                    grid-row: 4 / 6;
-                    grid-column: 2 / 3;
-                    background-color: green;
-                }
-
-                :nth-child(5) {
-                    align-self: center;
-                    justify-self: center;
-                    grid-row: 5 / 6;
-                    grid-column: 1 / 2;
-                    width: 80%;
-
-                }
-            }
-
-            .bookmark {
-                width: 80%;
-                // border: 1px solid red;
-                display: flex;
-                flex-direction: column;
-
-                section {
-                    // border: 1px solid blue;
-                    border-bottom: 1px solid black;
-                    margin: 13px 0;
-
-                    div {
-                        display: flex;
-                        flex-direction: row;
-                    }
-
-                    #title {
-                        margin: 0;
-                        font-family: 'Inter';
-                        text-align: left;
-                        font-weight: 800;
-                        font-size: 20px;
-                        line-height: 23.5px;
-
-                        width: 70%;
-                    }
-
-                    #btn {
-
-                        margin-left: 30px;
-                        border-radius: 15px;
-                        border: 1px solid #000000;
-                        background-color: #000000;
-                        color: rgb(245, 245, 245);
-
-                        width: 35px;
-                        height: 20px;
-
-                        font-family: 'Inter';
-                        text-align: center;
-                        font-weight: 600;
-                        font-size: 12px;
-                        line-height: 19.5px;
-
-                    }
-
-                    #memo {
-                        width: 95%;
-                        margin-left: 5px;
-                        margin-right: 5px;
-                        font-family: 'Inter';
-                        text-align: left;
-                        font-weight: 400;
-                        font-size: 12px;
-
-                    }
-
-                    #url {
-                        width: 95%;
-                        margin-left: 5px;
-                        margin-right: 5px;
-                        font-family: 'Inter';
-                        text-align: left;
-                        font-weight: 400;
-                        font-size: 14px;
-                    }
-                }
-
-            }
-        }
-
-
-
-    }
 
     display: flex;
     flex-direction: column;
 
 
-    .header {
-        align-self: center;
-    }
+    .searchBar {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: white;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-    .main {
+      height: 90px;
 
-        align-self: center;
+      margin-bottom: 70px;
 
+      #searchBarItem {
+        min-width: 265px;
+        width: 35%;
+        max-width: 450px;
         height: 100%;
-        width: 100%;
+        margin: 28px 0;
+        border: 2px solid black;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
+        /*  */
+        input {
+          position: absolute;
+          bottom: 0px;
+          border: 0px;
+          background: none;
+          width: 85%;
+          height: 100%;
+          margin: 0 7px;
+          font-size: 18px;
 
-        display: flex;
-        flex-direction: column;
-
-
-
-
-        .searchBar {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-            background-color: white;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            height: 90px;
-
-            margin-bottom: 70px;
-
-            #searchBarItem {
-                min-width: 265px;
-                width: 35%;
-                height: 100%;
-                margin: 28px 0;
-                border: 2px solid black;
-                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-
-                /*  */
-                input {
-                    position: absolute;
-                    bottom: 0px;
-                    border: 0px;
-                    background: none;
-                    width: 85%;
-                    height: 100%;
-                    margin: 0 7px;
-                    font-size: 18px;
-
-                }
-
-                input:focus {
-                    outline: none;
-                }
-
-                .searchBtn {
-                    width: 20px;
-                    position: absolute;
-                    right: 1%;
-                    bottom: 1%;
-                    background: transparent;
-                    border: none;
-                }
-
-
-            }
         }
 
-        .widgetContainer {
-            margin: 0 60px 70px 60px;
-
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
-            gap: 15px;
-            justify-content: center;
-
-            .widget-item {
-                @include widgetRadius;
-                border: 1px solid red;
-                min-height: 166.4px;
-            }
+        input:focus {
+          outline: none;
         }
+
+        .searchBtn {
+          width: 20px;
+          position: absolute;
+          right: 1%;
+          bottom: 1%;
+          background: transparent;
+          border: none;
+        }
+
+
+      }
     }
 
+    
+  }
 
+
+}
+.widgetContainer {
+
+  margin: 0 60px 70px 60px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
+  gap: 15px;
+  justify-content: center;
+
+  .widget-item {
+    @include widgetRadius;
+    border: 1px solid red;
+    min-height: 166.4px;
+  }
+}
+.rightSidebarContainer {
+
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+
+  position: fixed;
+
+  width: 40px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  z-index: 3;
+
+  // background-color: gray;
+  .sidebarTooltip {
+    position: fixed;
+    top: 30%;
+    height: 165px;
+    width: 130px;
+    // background-color: green;
+    position: fixed;
+    right: 50px;
+
+    p {
+      margin: 0;
+      font-family: 'Inter';
+      font-style: normal;
+      text-align: right;
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 23.5px;
+
+      right: 0;
+      position: absolute;
+    }
+
+    #m {
+      // top: 32.7%;
+
+      top: 7%;
+    }
+
+    #l {
+      top: 28.5%;
+    }
+
+    #b {
+      top: 60%;
+    }
+
+    #w {
+      top: 81%;
+    }
+  }
+
+
+  .sidebarBtns {
+    position: absolute;
+    top: 30%;
+
+    // rightSidebarContainer 에 onMouseEnter 이벤트 발생한 상황에서, 해당 버튼으로 마우스가 올라가면,
+    // rightSidebarContainer 의 onMouseLeave 이벤트가 발생하게 되므로, z-index 를 통해 버튼이 컨테이너 위에 위치하도록 함.
+    z-index: 2;
+
+    width: 30px;
+    height: 30px;
+    // position: absolute;
+    // top: 30%;
+    // right: 50%;
+
+    #btn {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+    }
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  .sidebarExtendedContainer {
+    position: fixed;
+    top: 30%;
+    width: 30px;
+    border-radius: 10px;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    button {
+      border: 1px solid black;
+    }
+
+    p {
+      margin: 0;
+      font-family: 'Inter';
+      font-style: normal;
+      text-align: center;
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 23.5px;
+    }
+
+    .upperSection {
+      margin-top: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        margin: 5px 0;
+        border-radius: 7px;
+        width: 25px;
+        height: 25px;
+        background: rgb(245, 245, 245);
+      }
+
+    }
+
+    .middleSection {
+      .separator {
+        border-radius: 3px;
+        margin: 6px 0;
+        height: 4px;
+        width: 25px;
+        background-color: rgb(245, 245, 245);
+      }
+    }
+
+    .lowerSection {
+
+      margin-bottom: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      button {
+        margin: 5px 0;
+        border-radius: 7px;
+        width: 25px;
+        height: 25px;
+        background: rgb(245, 245, 245);
+      }
+    }
+  }
+
+  .rightSidebar {
+    @include sidebarStyle;
+
+    .sidebarText {
+      @include sidebarBackgorund;
+      width: 100%;
+      position: sticky;
+      top: 0;
+      font-family: 'Inter';
+      font-style: normal;
+      text-align: center;
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 36px;
+
+      color: #000000;
+
+      margin-top: 7%;
+    }
+
+    .widget {
+      margin-bottom: 9%;
+
+      display: grid;
+      grid-template-columns: repeat(2, 120px);
+      grid-template-rows: repeat(5, 120px);
+      gap: 10px 10px;
+
+      * {
+        @include widgetRadius;
+      }
+
+      :nth-child(1) {
+        grid-row: 1 / 2;
+        grid-column: 1 / 3;
+        background-color: yellow;
+      }
+
+      :nth-child(2) {
+        grid-row: 2 / 4;
+        grid-column: 1 / 3;
+        background-color: blue;
+      }
+
+      :nth-child(3) {
+        grid-row: 4 / 5;
+        grid-column: 1 / 2;
+        background-color: black;
+      }
+
+      :nth-child(4) {
+        grid-row: 4 / 6;
+        grid-column: 2 / 3;
+        background-color: green;
+      }
+
+      :nth-child(5) {
+        align-self: center;
+        justify-self: center;
+        grid-row: 5 / 6;
+        grid-column: 1 / 2;
+        width: 80%;
+
+      }
+    }
+
+    .bookmark {
+      width: 80%;
+      // border: 1px solid red;
+      display: flex;
+      flex-direction: column;
+
+      section {
+        // border: 1px solid blue;
+        border-bottom: 1px solid black;
+        margin: 13px 0;
+
+        div {
+          display: flex;
+          flex-direction: row;
+        }
+
+        #title {
+          margin: 0;
+          font-family: 'Inter';
+          text-align: left;
+          font-weight: 800;
+          font-size: 20px;
+          line-height: 23.5px;
+
+          width: 70%;
+        }
+
+        #btn {
+
+          margin-left: 30px;
+          border-radius: 15px;
+          border: 1px solid #000000;
+          background-color: #000000;
+          color: rgb(245, 245, 245);
+
+          width: 35px;
+          height: 20px;
+
+          font-family: 'Inter';
+          text-align: center;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 19.5px;
+
+        }
+
+        #memo {
+          width: 95%;
+          margin-left: 5px;
+          margin-right: 5px;
+          font-family: 'Inter';
+          text-align: left;
+          font-weight: 400;
+          font-size: 12px;
+
+        }
+
+        #url {
+          width: 95%;
+          margin-left: 5px;
+          margin-right: 5px;
+          font-family: 'Inter';
+          text-align: left;
+          font-weight: 400;
+          font-size: 14px;
+        }
+      }
+
+    }
+  }
 }
