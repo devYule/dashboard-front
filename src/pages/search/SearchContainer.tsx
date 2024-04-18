@@ -5,6 +5,8 @@ import Contents from "./comps/Contents";
 import TextLogo from "./comps/TextLogo";
 import './styles/search.scss';
 import { useNavigate } from "react-router-dom";
+import CSSTransition from "react-transition-group/CSSTransition"
+import _ from "lodash";
 
 interface ScrollSize {
     before: number;
@@ -17,17 +19,32 @@ export default function SearchContainer() {
     const navi = useNavigate();
     const [scrolling, setScrolling] = useState(0);
     const [scrollDirection, setScrollDirection] = useState('up');
+    const [beforeScrollHeight, setBeforeScrollHeight] = useState(0);
+    const [isHeaderShow, setIsHeaderShow] = useState(true);
+    const animationDuration = {
+        enter: 100, exit: 100
+    };
 
-    const scrollStyle = scrollDirection === 'down' ? ' miniHeader' : ' fullHeader';
+    // const scrollStyle = scrollDirection === 'down' ? ' miniHeader' : ' fullHeader';
+
+    console.log(isHeaderShow);
 
     return (
         <div className="searchContainer" onScroll={onScroll}>
-            <div className={'header' + scrollStyle}>
-                <section className="logo pointer" onClick={() => navi('/main')}>
-                    <TextLogo />
-                </section>
-                <SearchBarContainer />
-            </div>
+            <CSSTransition
+                in={isHeaderShow}
+                timeout={animationDuration}
+                mountOnEnter
+                unmountOnExit
+                classNames='headerAnimation'
+            >
+                <div className={'header'}>
+                    <section className="logo pointer" onClick={() => navi('/main')}>
+                        <TextLogo />
+                    </section>
+                    <SearchBarContainer />
+                </div>
+            </CSSTransition>
             <SidebarMainContainer />
             <div className="main" id="main">
                 <Contents />
@@ -35,10 +52,15 @@ export default function SearchContainer() {
         </div>
     );
     function onScroll() {
-        const curScroll = document.querySelector('.searchContainer')?.scrollTop as number
-        setScrollDirection(scrolling > curScroll ? 'up' : 'down');
-        setScrolling(curScroll);
 
+        const curScroll = document.querySelector('.searchContainer')?.scrollTop as number
+        const scrollHegiht = document.querySelector('.searchContainer')?.scrollHeight as number
+        // setScrollDirection(scrolling > curScroll ? 'up' : 'down');
+        setScrolling(curScroll);
+        setBeforeScrollHeight(scrollHegiht);
+        if (beforeScrollHeight === scrollHegiht) {
+            setIsHeaderShow(scrolling > curScroll ? true : false);
+        }
         // 
 
         const scrollTop = document.querySelector('.searchContainer')?.scrollTop as number;

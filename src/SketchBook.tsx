@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import Widget from "./pages/main/comps/Widget";
 import '../src/pages/search/styles/search.scss'
-import SidebarRight from "./pages/main/sidebar/right/SidebarRight";
-import { SidebarActions } from "./interfaces/Interfaces";
-import Contents from "./pages/search/comps/Contents";
-import TextLogo from "./pages/search/comps/TextLogo";
-import SearchBarContainer from "./pages/main/comps/SearchBarContainer";
-import SidebarMainContainer from "./pages/main/sidebar/SidebarMainContainer";
 
 const mkinit = () => {
     const initWdg = [];

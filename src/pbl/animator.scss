@@ -12,6 +12,34 @@
     animation: moveFromRightToLeft 100ms linear;
 }
 
+@keyframes moveFromBottomToTop {
+    0% {
+        transform: translateY(0)
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+@mixin moveFromBottomToTop {
+    animation: moveFromBottomToTop 100ms linear;
+}
+
+@keyframes moveFromTopToBottom {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@mixin moveFromTopToBottom {
+    animation: moveFromTopToBottom 100ms linear;
+}
+
 @keyframes moveFromLeftToRight {
     0% {
         transform: translateX(-100%);
@@ -139,6 +167,17 @@
         @include fadeIn;
     }
 }
+
 .modalContainer {
     @include fadeIn;
+}
+
+.headerAnimation-enter-done {
+    @include moveFromTopToBottom;
+    position: sticky;
+}
+
+.headerAnimation-exit {
+    @include moveFromBottomToTop;
+    position: inherit;
 }
