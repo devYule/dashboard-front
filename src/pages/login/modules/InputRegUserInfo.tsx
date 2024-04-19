@@ -108,7 +108,7 @@ export default function InputRegUserInfo({ userId: superId, setSuperId, setSuper
         }
     }
     async function submitOnClick() {
-        if(!btnEnabled) return;
+        if (!btnEnabled) return;
         console.log('onBtnClick');
         // 통신 -> id가 중복되거나 닉네임이 중복되면 상태 변경.
         // 1: 성공 -1: id 중복 -2: 닉네임 중복 -3: 둘다 중복
@@ -124,24 +124,27 @@ export default function InputRegUserInfo({ userId: superId, setSuperId, setSuper
                     btnEnabled && setIsPassedUserInfo(true);
                     return;
                 }
-                if (value === -1) {
+
+
+            }).catch(err => {
+                if (err.code === 496) {
                     setIsIdPassed(false);
                     refArr.find(ref => ref.identity === 'id')?.ref.current?.focus();
                     return;
 
                 }
-                if (value === -2) {
+                if (err.code === 495) {
                     setIsNickPassed(false);
                     refArr.find(ref => ref.identity === 'nick')?.ref.current?.focus();
                     return;
                 }
-                if (value === -3) {
+                if (err.code === 494) {
                     setIsIdPassed(false);
                     refArr.find(ref => ref.identity === 'id')?.ref.current?.focus();
                     setIsNickPassed(false);
                     return;
                 }
-
-            }).catch(console.error);
+            }
+            );
     }
 }
