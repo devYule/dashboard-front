@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 export const axiosInstance: AxiosInstance = axios.create({
-    timeout: 15000,
+    timeout: 30000,
 });
 axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => response,
@@ -9,6 +9,7 @@ axiosInstance.interceptors.response.use(
 
         const { config, response } = err;
 
+        
         if ((response?.status === 401 ||
             (response?.status === 500 && (JSON.stringify(err?.response?.data).indexOf("ExpiredJwtException") > -1 ||
                 JSON.stringify(err?.response?.data).indexOf("MalformedJwtException")))) && config) {

@@ -4,7 +4,7 @@ import SidebarMainContainer from "../main/sidebar/SidebarMainContainer";
 import Contents from "./comps/Contents";
 import TextLogo from "./comps/TextLogo";
 import './styles/search.scss';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import CSSTransition from "react-transition-group/CSSTransition"
 import _ from "lodash";
 
@@ -15,15 +15,17 @@ interface ScrollSize {
 
 export default function SearchContainer() {
 
-    const [isScrollOver, setIsScrollOver] = useState(false);
-    const navi = useNavigate();
     const [scrolling, setScrolling] = useState(0);
-    const [scrollDirection, setScrollDirection] = useState('up');
     const [beforeScrollHeight, setBeforeScrollHeight] = useState(0);
     const [isHeaderShow, setIsHeaderShow] = useState(true);
+    const navi = useNavigate();
     const animationDuration = {
         enter: 100, exit: 100
     };
+
+    const [searchParam, setSearchParam] = useSearchParams();
+    const query = searchParam.get('q');
+
 
     // const scrollStyle = scrollDirection === 'down' ? ' miniHeader' : ' fullHeader';
 
@@ -47,7 +49,7 @@ export default function SearchContainer() {
             </CSSTransition>
             <SidebarMainContainer />
             <div className="main" id="main">
-                <Contents />
+                <Contents query={query} />
             </div>
         </div>
     );

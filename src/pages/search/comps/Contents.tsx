@@ -1,12 +1,23 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "../../../pbl/AxiosUtil";
+import { useNavigate } from "react-router-dom";
 
-interface ContentsInter {
-    title: string;
-    content: string;
-    isBookmarked: boolean;
+interface OrderedSitesRef {
+    contents: ContentsRef[]
 }
 
-const initDatas: ContentsInter[] = [
+interface ContentsRef {
+    title: string;
+    link: string;
+    contents: string[];
+    category: string;
+    iconPath: string;
+    subTitle: string;
+    isBookmarked: number;
+}
+
+const initDatas: any[] = [
     { title: 'test1', content: 'test1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 content', isBookmarked: false },
     { title: 'test2', content: 'test2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 content', isBookmarked: false },
     { title: 'test3', content: 'test3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 content', isBookmarked: true },
@@ -33,10 +44,172 @@ enum BtnTypes {
     NONE, BOOKMAKRED, ADD, SUCCESS
 }
 
-export default function Contents() {
+/* 
 
-    const [contents, setcontents] = useState<ContentsInter[]>(initDatas);
+/ ---------------------------- response data example ----------------------------- /
+
+[
+    [
+        {
+            "title": [
+                "[매경test 합격 후기] 매경테스트 난이도 및 시사용어 공부법"
+            ],
+            "link": "https://in.naver.com/fnhelp/contents/internal/685937062712576?areacode=ink*A&query=test",
+            "content": [
+                "3일 전안녕하세요 여러분, 금융권 및 은행권 취업 준비를 하시는 분들이라면 '매경test' 자격증을 따는 경우가 많은데요. 대기업과 공기업 채용 시 우대는 물론, 대학 졸업 논문 및 시험 대체와 학점은행제의 학점인정, 고교 학교생활기록부 기재 등으로 활용 범위가 넓기 때문입니다. 그래서 오늘은 취업에서 안정적인 합격을 위한 매경..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": null,
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "버피테스트 효과 / 다이어트 운동 Burpee Test 칼로리 소모량"
+            ],
+            "link": "https://in.naver.com/apunis323/contents/internal/682515372225248?areacode=ink*A&query=test",
+            "content": [
+                "1주 전안녕하세요 워니파파버피루프입니다. 오늘은 우리의 건강한 몸매 유지 비결 중 하나, 바로 버피테스트에 대해 이야기해보려고 합니다. 다이어트와 체력 향상을 위해 많은 분들이 도전하지만, 그 효과와 칼로리 소모량에 대해서는 잘 모르시는 분들이 많더라고요. 다이어트 운동 버피테스트 효과/칼로리 버피테스트란? Burpee ..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": null,
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "등가운데통증 원인은 목디스크? 증상 자가진단 TEST"
+            ],
+            "link": "https://in.naver.com/kokhospital/contents/internal/671337708597344?areacode=ink*A&query=test",
+            "content": [
+                "2024.03.12.목디스크는 목통증 외에도 다양한 부위에 증상이 나타날 수 있기에 초기 진단에 어려움을 겪을 수 있습니다. 디스크로 인해 발생할 수 있는 증상들인 등가운데통증, 두통, 날개뼈나 어깨통증, 손저림 등의 증상이 있다면 대부분 해당 부위에 문제가 발생한 것이라 생각하여 그에 대한 치료를 진행하게 되는데요.  이렇다 보니..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": null,
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "2024학년도 시매쓰 영재통합반 초3 선발 TEST 안내"
+            ],
+            "link": "https://blog.naver.com/cmath_club/223368204453",
+            "content": [
+                "2024학년도 영재통합반 선발 TEST 안내 초등 저학년의 경우 사고력수학 NC를 활용해 창조적이고 자유로운 사고방식을 발달시켜 더 넓은 지적 용량을 구축해 나가는 것이 중요하죠. 이를 토대로 초등 고학년이 되었을때는 빠른 진도와 함께 깊이 있는 이해력을 길러낼수 있어요. 영재교육의 혁신! 2024학년도 영재통합반 선발 안내 교육의 목표는 단순히 암기..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAyMDA1MTlfMTAz%2FMDAxNTg5ODc0MDU5OTI3.HosD96SswBAigSLr8he24yV98aSF-Gp48Qc5bqRR8IMg.p8BNlm9cgOOB5P-5ZLHLzco_4cmAfPOVtht6NflYc30g.JPEG.cmath_club%2F%2525BD%2525C3%2525B8%2525C5%2525BE%2525B2.jpg&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "논문통계이해 - TOST two one sided tests -equivalence test 동등성 검증"
+            ],
+            "link": "https://blog.naver.com/lucifer246/223425849931",
+            "content": [
+                "equivalence test TOST (two one sided tests) 동등성에 대한 결론을 내리기 위한 검증은 equivalence test 을 활용한다. Schuirmann’s (1987) 는 동등성 검증을 위해서 TOST (two one sided tests) 를 제안하였다. 이 검증을 사용하여 집단간 평균 차이가 실제로 어느정도로 큰 차이인지 실증할수 있다. 또한 작은 평균 차이에 대해서 동등하다고 결론내릴수 있다. equivalence 를..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAxODAxMDhfNTQg%2FMDAxNTE1MzYwMjAwNjI4.4rmbSqSfRs7UFdiYC0gA0mV-J04XqXRADo-73wTgl8Qg.WpumLilJ2FC6C14XhbEYCaYGg55OGRVc3mXo4WAfGo0g.JPEG.lucifer246%2FprofileImage.jpg&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "영어쑥쑥어학원 정기 SR test 우수학생 포상~"
+            ],
+            "link": "https://blog.naver.com/olibie9/223344043053",
+            "content": [
+                "우리 영어쑥쑥어학원에서는 원서정독반, 5-6학년 브릿지반 아이들을 대상으로 3개월에 한번씩 정기 SR test를 보고 있습니다. SR test (Star reading test) 란? 미국에 본사를 두고 전세계 학교 및 기관에서 사용중인 르네상스에서 제공되는 리딩레벨 테스트입니다. 시험자의 정답속도와 정확도에 따라 다음문제가 달라지는 방식으로 34문제 를 푸는 테스트푼 후..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAyMzEyMTVfMTM1%2FMDAxNzAyNTY2NDI4Mzk4.g9JxH593zqRJet6U0bQOj1Ixj33byLgyNXszX7LKjf0g.aPvvWs1JR3HpXlGWlibuhKvnJCm36j1QYxOAnd_XHSMg.JPEG.olibie9%2FprofileImage.jpg&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "[미국 대학 입시분석] Test-optional 제도 말기의 SAT 준비 방법"
+            ],
+            "link": "https://blog.naver.com/edusolomon/223317296641",
+            "content": [
+                "이 Post에서는 Test-optional 제도의 말기에서 SAT를 준비하는 방법에 대해 살펴 보도록 하겠습니다. 한국으로는 중3~고1, 미국으로는 고등학교 9~10학년 학생들에게 Standardized Test에서 성공 가능성을 극대화하기 위해 취해야 할 세 가지 중요한 단계가 있습니다: 1. 자신의 장점에 맞는 를 선택합니다. SAT와 ACT는 비슷하지만 형식과 내용이 다르며..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAxOTEyMTZfMjYg%2FMDAxNTc2NDY1ODg2MDk1.UU9tHWZgnjbrOgBzu4ZVhhD6H1pXhX6pP4hFMhpBzmEg.fSOm_WHYTBm4F_eq4rxzNBS8R58pzzqF0N4eqQbkXbgg.JPEG.edusolomon%2Fbg_fff.jpg&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "초등영어시험 Primary English Test 공식 론치!"
+            ],
+            "link": "https://blog.naver.com/britishcouncilkorea/223373992147",
+            "content": [
+                "The right test at the right time 학생들의 성장에 따라 영어 학습, 지도, 평가 방법 또한 진화해야 합니다. 작년 영국문화원 개원 50주년을 맞아 'Young Learner Test'라는 가칭으로 시범 운영(piloting test)을 진행하며 소규모 그룹에 먼저 선보였고, 2024년에는 'Primary English '라는 정식 명칭과 함께 초등 영어 시장에 새로운 시험을..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAyMDAzMjVfMzkg%2FMDAxNTg1MDk2MjcyMDIz.Y__HYJXPsvGo9xBNJ_ItRPCNl8h7fcEndUZS0MLHsA8g.guK42H3wHBcWEvA0eUGzR6Cg5Q87X1EgL8p-dWBwDAQg.PNG.britishcouncilkorea%2FBritish%252BCouncil_Social%252BMedia%252BProfile%252BPictures_Blue.png&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "[매경test 합격 후기] 매경테스트 난이도 및 시사용어 공부법"
+            ],
+            "link": "https://blog.naver.com/fnhelp/223423361925",
+            "content": [
+                "안녕하세요 여러분, 금융권 및 은행권 취업 준비를 하시는 분들이라면 '매경test' 자격증을 따는 경우가 많은데요. 대기업과 공기업 채용 시 우대는 물론, 대학 졸업 논문 및 시험 대체와 학점은행제의 학점인정, 고교 학교생활기록부 기재 등으로 활용 범위가 넓기 때문입니다. 그래서 오늘은 취업에서 안정적인 합격을 위한 매경 자격증에 대해서 알아보는 시간을..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=https%3A%2F%2Fblogpfthumb-phinf.pstatic.net%2FMjAxOTA2MjBfMjk5%2FMDAxNTYxMDIxNjYwNDk3.iW7cLxHIyA_yf1R2L0Cqg6S1Ps_jYib9Fuj7D7rzemQg.x7AoB7qlaLz3CCJZuUS1e1p2oVoZ0X2oXIRwU8NOKVYg.JPEG.fnhelp%2Fkakao-yellow-profile%252Bimage.jpg&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        },
+        {
+            "title": [
+                "MAP Test, 제주 국제학교 입학시험 맵테스트 알아보기!"
+            ],
+            "link": "https://cafe.naver.com/youhakcamp/772185?art=ZXh0ZXJuYWwtc2VydmljZS1uYXZlci1zZWFyY2gtY2FmZS1wcg.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYWZlVHlwZSI6IkNBRkVfVVJMIiwiY2FmZVVybCI6InlvdWhha2NhbXAiLCJhcnRpY2xlSWQiOjc3MjE4NSwiaXNzdWVkQXQiOjE3MTM5NzMwMTU2MDd9.qSGq15kAZO7kfE-Oy95hI6vdiYP0h7Z-fybkLVaaXqU",
+            "content": [
+                "오늘은 제주 국제학교 뿐만 아니라 다양한 국내 국제학교가 채택하고 있는 입학시험인 MAP Test, 맵테스트에 대해 알려드릴게요! MAP Test 정보, 구성 MAP Test는 Measures of Academic Progress의 줄임말로, 학업성취도 평가라고 생각하시면 됩니다. 컴퓨터 기반의 적응형 평가이기 때문에 학생들이 고르는 정답과 오답에 따라 실시간으로 문제의 난이도가..."
+            ],
+            "category": "COMMUNITY",
+            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2FMjAyMTAyMjBfMjAw%2FMDAxNjEzODAyMjcyNjgx.CdwxELQm6KNFlZhP4-SCR6SL96tf6G3lCfGkG_nKbtwg.OEW272Ee-jEi5GRB9bG-VwdMBhnbpx2JvZvUoYneEZcg.PNG%2F%25EC%25B9%25B4%25ED%258E%2598_%25EB%258C%2580%25ED%2591%259C%25EC%259D%25B4%25EB%25AF%25B8%25EC%25A7%2580.png&type=f54_54",
+            "subTitle": null,
+            "isBookmarked": 0
+        }
+    ]
+]
+
+*/
+
+
+
+export default function Contents({ query }: { query: string | null }) {
+
+    const [contents, setcontents] = useState<OrderedSitesRef[]>([]);
     const [addedIdx, setAddedIdx] = useState<number>(-1);
+    const navi = useNavigate();
+
+    useEffect(() => {
+        async function fetchData() {
+
+            await axiosInstance.get(`/api/search?query=${query}`)
+                .then(res => {
+                    console.log(res.data.code);
+                    console.log(res.data);
+                    if (res.data.code > 0) {
+                        if (res.data.code === 479) {
+                            navi('/mypage?err=site-is-empty');
+                        }
+                    }
+                })
+        }
+        fetchData();
+
+    }, [query]);
 
 
     const addImg = <svg viewBox="0 0 27 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,20 +227,23 @@ export default function Contents() {
         <div className="contentsContainer">
             {contents.map((content, idx) =>
                 <div key={idx} className="content">
-                    <p className="title" onMouseEnter={() => titleOnMouseEnter(idx + 'thBtn')} onMouseLeave={() => titleOnMouseLeave(idx + 'thBtn')}>{content.title}
+                    <p className="title" onMouseEnter={() => titleOnMouseEnter(idx + 'thBtn')} onMouseLeave={() => titleOnMouseLeave(idx + 'thBtn')}>
+                        {/* {content.title} */}
                         {
                             addedIdx === idx ?
                                 <button className="bookmarkBtns">{successImg}</button>
                                 :
                                 <button id={idx + 'thBtn'} className="bookmarkBtns pointer" style={{ visibility: 'hidden' }}
                                     onClick={content => bookmarBtnOnClick(content, idx)}>
-                                    {content.isBookmarked ? bookmarkedImg : addImg}
+                                    {/* {content.isBookmarked === 1 ? bookmarkedImg : addImg} */}
                                 </button>
                         }
 
                     </p>
 
-                    <p className="text">{content.content}</p>
+                    <p className="text">
+                        {/* {content.content} */}
+                    </p>
 
                     <hr />
                 </div>

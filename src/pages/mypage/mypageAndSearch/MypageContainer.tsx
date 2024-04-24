@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import UserInfo from "../Infos/UserInfo";
 import TextLogo from "../../search/comps/TextLogo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ModalType } from "../../../interfaces/Interfaces";
 import { AllUserDatasContext, MypageModalSetterContext, SetAllUserDatasContext } from "../../../pbl/Contexts";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
@@ -20,6 +20,7 @@ export default function MypageConatiner() {
     const [modalType, setModalType] = useState<ModalType>(ModalType.NONE);
     const mainRef = useRef<HTMLDivElement>(null);
     const navi = useNavigate();
+
 
     // modal
     const [curPwd, setCurPwd] = useState('');

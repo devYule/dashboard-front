@@ -1,6 +1,7 @@
-import { CSSProperties, ChangeEvent, useContext, useState } from "react";
+import { CSSProperties, ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { AllUserDatasContext, SetAllUserDatasContext } from "../../../../pbl/Contexts";
 import { axiosInstance } from "../../../../pbl/AxiosUtil";
+import { useSearchParams } from "react-router-dom";
 
 interface Sites {
     id: number;
@@ -117,6 +118,33 @@ export default function UserSites() {
     const userInfos = useContext(AllUserDatasContext);
     const setUserInfos = useContext(SetAllUserDatasContext);
 
+    const divRef = useRef<HTMLDivElement>(null);
+    const btnRef = useRef<HTMLButtonElement>(null);
+    const [searchParam, setSearchParam] = useSearchParams();
+
+    const errorIs = searchParam.get('err');
+
+    useEffect(() => {
+        if (errorIs === 'site-is-empty') {
+            if (divRef.current !== null) {
+                divRef.current.className = 'sites site-is-empty';
+                setTimeout(() => {
+                    if (divRef.current !== null) {
+                        divRef.current.className = 'sites';
+                    }
+                }, 2000);
+            }
+            if (btnRef.current !== null) {
+                btnRef.current.style.visibility = 'visible';
+                setTimeout(() => {
+                    if (btnRef.current !== null) {
+                        btnRef.current.style.visibility = 'hidden';
+                    }
+                }, 2000);
+            }
+        }
+    }, [errorIs])
+
 
     const btnStyle: CSSProperties = {
         visibility: isHoverLastIdx ? 'visible' : 'hidden',
@@ -135,7 +163,7 @@ export default function UserSites() {
     }
     console.log('userSites', userInfos.sites);
     return (
-        <div className="sites">
+        <div className="sites" ref={divRef}>
             <p id="title">Sites</p>
             {userInfos.sites.map(site => {
                 return (
@@ -156,7 +184,9 @@ export default function UserSites() {
                         onChange={e => onInputChange(e)}
                     ></input>
                     <button id="btn" className="totalBtns pointer" style={btnStyle}
-                        onClick={onClickBtn}>+</button>
+                        onClick={onClickBtn} ref={btnRef}>
+                        +
+                    </button>
                 </div>
                 <div className="dropDown" style={dropDownStyle}>
                     {allSites.length === userInfos.sites.length ? <p id="empty">empty...</p>

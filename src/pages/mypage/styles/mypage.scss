@@ -16,6 +16,25 @@ p {
 
 // 
 
+.site-is-empty {
+    animation: twinkle 0.5s ease infinite;
+    
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 100;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100;
+    }
+}
+
 .succeedChecker {
     width: 15vw;
     height: 15vw;
@@ -23,19 +42,23 @@ p {
     top: 30%;
     animation: doom 2.1s linear;
 }
+
 @keyframes doom {
     0% {
         width: 15vw;
         height: 15vw;
     }
+
     5% {
         width: 20vw;
         height: 20vw;
     }
+
     70% {
         width: 15vw;
         height: 15vw;
     }
+
     100% {
         opacity: 0;
         width: 13vw;
