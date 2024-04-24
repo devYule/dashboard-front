@@ -8,14 +8,15 @@ export default function LoginForm() {
 
 
     const [userIdStatus, setUserIdStatus] = useState<{status: number | undefined, userId: string}>({status: undefined, userId: ''});
+    const [servKey, setServKey] = useState<string>('');
 
     return (
         <div className={styles.loginForm}>
             {
-                userIdStatus.status === 1 ? <InputPassword userId={userIdStatus.userId} setUserIdStatus={setUserIdStatus} /> :
+                userIdStatus.status === 1 ? <InputPassword userId={userIdStatus.userId} setUserIdStatus={setUserIdStatus} servKey={servKey} /> :
                     userIdStatus.status === 0 ?
                         <Register userId={userIdStatus.userId} /> :
-                        <InputId userIdStatus={userIdStatus} setUserIdStatus={setUserIdStatus} />
+                        <InputId userIdStatus={userIdStatus} setUserIdStatus={setUserIdStatus} setServKey={setServKey} />
             }
         </div>
     );

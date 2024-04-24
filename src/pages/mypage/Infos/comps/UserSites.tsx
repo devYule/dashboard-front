@@ -1,4 +1,6 @@
-import { CSSProperties, ChangeEvent, useState } from "react";
+import { CSSProperties, ChangeEvent, useContext, useState } from "react";
+import { AllUserDatasContext, SetAllUserDatasContext } from "../../../../pbl/Contexts";
+import { axiosInstance } from "../../../../pbl/AxiosUtil";
 
 interface Sites {
     id: number;
@@ -106,12 +108,15 @@ const initUserSites = [
 
 export default function UserSites() {
 
-    const [userSites, setUserSites] = useState<number[]>(initUserSites);
     const [isHoverLastIdx, setIsHoverLastIdx] = useState<boolean>(false);
     const [isClicked, setIsClicked] = useState<boolean>(false);
     const [isFocus, setIsFocus] = useState<boolean>(false);
     const [inputValue, setInputValue] = useState<string>('');
     const [animationInit, setAnimationInit] = useState<number>(Math.random());
+
+    const userInfos = useContext(AllUserDatasContext);
+    const setUserInfos = useContext(SetAllUserDatasContext);
+
 
     const btnStyle: CSSProperties = {
         visibility: isHoverLastIdx ? 'visible' : 'hidden',
@@ -128,17 +133,17 @@ export default function UserSites() {
     const dropDownStyle: CSSProperties = {
         visibility: isFocus ? 'visible' : 'hidden',
     }
-    console.log('userSites', userSites);
+    console.log('userSites', userInfos.sites);
     return (
         <div className="sites">
             <p id="title">Sites</p>
-            {userSites.map(site => {
+            {userInfos.sites.map(site => {
                 return (
                     <div key={site} className="box eachBox">
                         {allSites[site].img}
-                        <button className="minusBtn totalBtns pointer" onClick={() => {
-                            setUserSites(userSites.filter(id => id !== site));
-                        }}>-</button>
+                        <button className="minusBtn totalBtns pointer" onClick={() => onMinusBtnClick(site)}>
+                            -
+                        </button>
                     </div>
                 )
             })}
@@ -154,9 +159,9 @@ export default function UserSites() {
                         onClick={onClickBtn}>+</button>
                 </div>
                 <div className="dropDown" style={dropDownStyle}>
-                    {allSites.length === userSites.length ? <p id="empty">empty...</p>
+                    {allSites.length === userInfos.sites.length ? <p id="empty">empty...</p>
                         :
-                        allSites.filter(site => !userSites.includes(site.id)).map(site => {
+                        allSites.filter(site => !userInfos.sites.includes(site.id)).map(site => {
                             if (inputValue.length > 0) {
                                 if (!site.title.includes(inputValue)) {
                                     return <></>;
@@ -203,16 +208,62 @@ export default function UserSites() {
             setAnimationInit(Math.random());
         }, 150);
     }
-    function dropDownOnClick(siteId: number) {
-        console.log('event6');
-        console.log(siteId);
-        setTimeout(() => {
-            setUserSites([...userSites, siteId]);
-        }, 100);
-    }
+
     function onInputChange(e: ChangeEvent<HTMLInputElement>) {
         console.log('event7');
         setInputValue(e.target.value);
+    }
+
+    function onMinusBtnClick(siteId: number) {
+        if (siteId < 0 || siteId > 8) return;
+        delSite(siteId);
+    }
+    function dropDownOnClick(siteId: number) {
+        if (siteId < 0 || siteId > 8) return;
+        console.log(siteId);
+        // setTimeout(() => {
+        //     setUserSites([...userSites, siteId]);
+        // }, 100);
+
+        setTimeout(() => {
+            addSite(siteId);
+        }, 100);
+    }
+
+    // minusBtn request
+    async function delSite(siteId: number) {
+        await axiosInstance.delete(`/api/mypage/site?id=${siteId}`)
+            .then(res => {
+                // response: deleted id
+                if (res.data.code > 0) {
+                    if (res.data.code === 489) {
+                        console.log('site id is unvalidated');
+                    }
+                    return;
+                }
+                if (res.data.value < 0 || res.data.value > 8) {
+                    console.log('site id length is unvalidated');
+                }
+                setUserInfos({
+                    ...userInfos, sites: userInfos.sites.filter(site => site !== res.data.value),
+                });
+            })
+            .catch(console.error);
+    }
+
+
+    // dropDownBtn request
+    async function addSite(siteId: number) {
+        await axiosInstance.post('/api/mypage/site', { site: siteId })
+            .then(res => {
+                if (res.data.value < 0 || res.data.value > 8) {
+                    console.log('site id length is unvalidated');
+                }
+                setUserInfos({
+                    ...userInfos, sites: [...userInfos.sites, res.data.value],
+                })
+            })
+            .catch(console.error);
     }
 
 }

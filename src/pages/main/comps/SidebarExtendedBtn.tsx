@@ -98,7 +98,7 @@ export default function SidebarExtendedBtn() {
 
     }
     function doLogOut() {
-        localStorage.removeItem('user');
-        navi('/');
+        localStorage.removeItem('at');
+        window.location.reload();
     }
 }

@@ -16,6 +16,33 @@ p {
 
 // 
 
+.succeedChecker {
+    width: 15vw;
+    height: 15vw;
+    position: fixed;
+    top: 30%;
+    animation: doom 2.1s linear;
+}
+@keyframes doom {
+    0% {
+        width: 15vw;
+        height: 15vw;
+    }
+    5% {
+        width: 20vw;
+        height: 20vw;
+    }
+    70% {
+        width: 15vw;
+        height: 15vw;
+    }
+    100% {
+        opacity: 0;
+        width: 13vw;
+        height: 13vw;
+    }
+}
+
 .modalContainer {
     position: fixed;
     width: 100vw;
@@ -127,28 +154,57 @@ p {
                 font-size: 25px;
             }
 
-            .circle {
-                flex-direction: column;
+            .picInfos {
+                height: 27vh;
 
-                border: 1px solid black;
-                height: calc(100vh / 4);
-                width: calc(100vh / 4);
-                min-width: 200px;
-                min-height: 200px;
-                max-width: 250px;
-                max-height: 250px;
-                border-radius: 50%;
+                .circle {
+                    flex-direction: column;
 
-                #pic {
+                    border: 1px solid black;
+                    height: calc(100vh / 4);
+                    width: calc(100vh / 4);
+                    min-width: 200px;
+                    min-height: 200px;
+                    max-width: 250px;
+                    max-height: 250px;
                     border-radius: 50%;
-                    height: 100%;
-                    width: 100%;
+
+                    #pic {
+                        border-radius: 50%;
+                        height: 100%;
+                        width: 100%;
+                    }
+
                 }
 
-            }
+                .imgMouseOver {
+                    margin-top: 1.5px;
+                    font-family: 'Inter';
+                    text-align: center;
+                    font-weight: 500;
+                    font-size: 15px;
+                    width: 15%;
+                    position: relative;
+                    left: calc(50% - 15px);
 
-            #file {
-                display: none;
+                    animation: dropDown 100ms linear;
+                }
+
+                @keyframes dropDown {
+                    0% {
+                        transform: translateY(-100%);
+                        z-index: -1;
+                    }
+
+                    100% {
+                        transform: translateY(0);
+                        z-index: 2;
+                    }
+                }
+
+                #file {
+                    display: none;
+                }
             }
 
             .nickAndMail {
@@ -156,6 +212,9 @@ p {
                 flex-direction: column;
                 align-self: end;
                 gap: 5px;
+
+                height: 50px;
+
 
                 .edit {
                     margin-right: 10px;
@@ -179,203 +238,264 @@ p {
                 .changeContainer {
                     position: relative;
 
-                    .input {
-                        @include inputBasic;
-                        border-bottom: 1px solid black;
-                        padding: 0 17px 0 5px;
-                        font-family: 'Inter';
-                        font-style: normal;
-                        text-align: left;
-                        font-weight: 500;
-                        font-size: 14px;
-                        margin-top: 2px;
-                        width: 150px;
-
-                    }
-
-                    .input:focus {
-                        outline: none;
-                    }
-
-
-                    .submitBtn {
-                        background: transparent;
-                        border: none;
+                    .loading {
                         position: absolute;
-                        right: 0;
-                        bottom: 1px;
-                        width: 15px;
-                        height: 15px;
+                        right: -22px;
+                        bottom: 0;
+                        height: 20px;
+                        width: 16px;
+                        display: flex;
+                        flex-direction: row;
+                        gap: 2px;
 
                         svg {
-                            width: 10px;
-                            height: 10px;
+                            width: 4px;
+                            animation: fThing 0.6s linear infinite;
                         }
+
+
+                        :nth-child(2) {
+                            animation-delay: 0.1s;
+                        }
+
+                        :nth-child(3) {
+                            animation-delay: 0.3s;
+                        }
+
+                        @keyframes fThing {
+                            0% {
+                                transform: translateY(0);
+                            }
+
+                            20% {
+                                transform: translateY(-2px);
+                            }
+
+                            40% {
+                                transform: translateY(0px);
+                            }
+
+                            80% {
+                                transform: translateY(2px);
+                            }
+
+                            100% {
+                                transform: translateY(0);
+                            }
+                        }
+
                     }
+
                 }
 
-                #nick {
+                .input {
+                    @include inputBasic;
+                    border-bottom: 1px solid black;
+                    padding: 0 17px 0 5px;
                     font-family: 'Inter';
                     font-style: normal;
-                    text-align: right;
-                    font-weight: 800;
-                    font-size: 20px;
+                    text-align: left;
+                    font-weight: 500;
+                    font-size: 14px;
+                    margin-top: 2px;
+                    width: 150px;
 
                 }
 
-                #mail {
-                    font-family: 'Inter';
-                    font-style: normal;
-                    text-align: right;
-                    font-weight: 400;
-                    font-size: 13px;
-                    line-height: 30px;
-                }
-            }
-
-            .sites {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                // background-color: blue;
-                width: 100%;
-
-                .lastBox {
-                    border: 1px solid white;
-                    height: 39px;
+                .input:focus {
+                    outline: none;
                 }
 
-                .eachBox {
-                    border: 1px solid black;
-                    height: 39px;
-                }
 
-                .box {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: start;
-                    align-items: center;
-                    gap: 50px;
-                    width: 180px;
+                .submitBtn {
+                    background: transparent;
+                    border: none;
+                    position: absolute;
+                    right: 0;
+                    bottom: 1px;
+                    width: 15px;
+                    height: 15px;
 
                     svg {
-                        width: 100px;
-
+                        width: 10px;
+                        height: 10px;
                     }
-
-                    .minusBtn {
-                        margin-left: 5px;
-                    }
-
-                    #addInput {
-                        margin-left: 7px;
-                        width: 98px;
-                        outline: none;
-                        border: 1px solid black;
-                        border-top: 0;
-                        border-left: 0;
-                        border-right: 0;
-                        font-size: 12px;
-
-                    }
-
-                    .totalBtns {
-                        border: 1px solid #000000;
-                        background-color: white;
-                        color: black;
-
-                        width: 20px;
-                        height: 20px;
-
-                        font-family: 'Inter';
-                        text-align: center;
-                        font-weight: 200;
-                        font-size: 22px;
-                        line-height: 21px;
-
-                    }
-
-                }
-
-
-                .dropDown {
-                    z-index: 1;
-                    background-color: antiquewhite;
-                    position: relative;
-                    top: -10px;
-                    left: 5px;
-                    width: 120px;
-                    min-height: 10px;
-
-                    border: 1px solid black;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 2px;
-
-                    .dropDownItemBtns {
-                        background: transparent;
-                        border: none;
-
-                        svg {
-                            height: 40px;
-                            margin-right: 10px;
-
-                        }
-
-                    }
-
-                    #empty {
-                        font-family: 'Inter';
-                        font-style: normal;
-                        text-align: left;
-                        font-weight: 300;
-                        font-size: 14px;
-                        margin: 8px;
-
-                    }
-                }
-
-                .lastGrp {
-                    height: 41px;
                 }
             }
 
-            .dangerZone {
-                width: 100%;
+            #nick {
+                font-family: 'Inter';
+                font-style: normal;
+                text-align: right;
+                font-weight: 800;
+                font-size: 20px;
 
-                #title {
-                    grid-column: 1 / 4;
-                    margin-bottom: 10px;
+            }
+
+            #mail {
+                font-family: 'Inter';
+                font-style: normal;
+                text-align: right;
+                font-weight: 400;
+                font-size: 13px;
+                line-height: 30px;
+            }
+        }
+
+        .cancelBtn {
+            position: relative;
+            top: 2.5px;
+            right: 4px;
+            background: transparent;
+            border: none;
+
+            svg {
+                width: 13px;
+            }
+        }
+
+        .sites {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            // background-color: blue;
+            width: 100%;
+
+            .lastBox {
+                border: 1px solid white;
+                height: 39px;
+            }
+
+            .eachBox {
+                border: 1px solid black;
+                height: 39px;
+            }
+
+            .box {
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                align-items: center;
+                gap: 50px;
+                width: 180px;
+
+                svg {
+                    width: 100px;
+
                 }
 
-                .part {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
+                .minusBtn {
+                    margin-left: 5px;
+                }
 
-                    border: 1px solid red;
-                    height: 70px;
-                    width: 100%;
+                #addInput {
+                    margin-left: 7px;
+                    width: 98px;
+                    outline: none;
+                    border: 1px solid black;
+                    border-top: 0;
+                    border-left: 0;
+                    border-right: 0;
+                    font-size: 12px;
+
+                }
+
+                .totalBtns {
+                    border: 1px solid #000000;
+                    background-color: white;
+                    color: black;
+
+                    width: 20px;
+                    height: 20px;
+
+                    font-family: 'Inter';
+                    text-align: center;
+                    font-weight: 200;
+                    font-size: 22px;
+                    line-height: 21px;
+
+                }
+
+            }
 
 
+            .dropDown {
+                z-index: 1;
+                background-color: antiquewhite;
+                position: relative;
+                top: -10px;
+                left: 5px;
+                width: 120px;
+                min-height: 10px;
 
-                    .btns {
-                        background-color: black;
-                        border: 1px solid black;
-                        height: 30px;
-                        width: 100px;
-                        margin: 10px;
+                border: 1px solid black;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
 
-                        font-family: 'Inter';
-                        text-align: center;
-                        font-weight: 800;
-                        font-size: 12px;
-                        line-height: 21px;
-                        color: rgb(245, 245, 245);
-                        border-radius: 15px;
+                .dropDownItemBtns {
+                    background: transparent;
+                    border: none;
+
+                    svg {
+                        height: 40px;
+                        margin-right: 10px;
 
                     }
+
+                }
+
+                #empty {
+                    font-family: 'Inter';
+                    font-style: normal;
+                    text-align: left;
+                    font-weight: 300;
+                    font-size: 14px;
+                    margin: 8px;
+
+                }
+            }
+
+            .lastGrp {
+                height: 41px;
+            }
+        }
+
+        .dangerZone {
+            width: 100%;
+
+            #title {
+                grid-column: 1 / 4;
+                margin-bottom: 10px;
+            }
+
+            .part {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                border: 1px solid red;
+                height: 70px;
+                width: 100%;
+
+
+
+                .btns {
+                    background-color: black;
+                    border: 1px solid black;
+                    height: 30px;
+                    width: 100px;
+                    margin: 10px;
+
+                    font-family: 'Inter';
+                    text-align: center;
+                    font-weight: 800;
+                    font-size: 12px;
+                    line-height: 21px;
+                    color: rgb(245, 245, 245);
+                    border-radius: 15px;
+
                 }
             }
         }

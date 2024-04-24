@@ -1,15 +1,11 @@
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, useRef, useState } from "react";
 import styles from '../styles/Login.module.css'
 import TitleText from "./TitleText";
 import InputLineReg from "./InputLineReg";
 import DirectionBtn from "./DirectionBtn";
-import axios from "axios";
+import { axiosInstance } from "../../../pbl/AxiosUtil";
 
-export default function InputRegUserInfo({ userId: superId, setSuperId, setSuperNick, setSuperPw, setIsPassedUserInfo }:
-    {
-        userId: string, setSuperId: React.Dispatch<React.SetStateAction<string>>, setSuperNick: React.Dispatch<React.SetStateAction<string>>,
-        setSuperPw: React.Dispatch<React.SetStateAction<string>>, setIsPassedUserInfo: React.Dispatch<React.SetStateAction<boolean>>
-    }) {
+export default function InputRegUserInfo({ userId: superId, setIsPassedUserInfo, setServKey }: { userId: string, setIsPassedUserInfo: React.Dispatch<React.SetStateAction<boolean>>, setServKey: React.Dispatch<React.SetStateAction<string>> }) {
 
 
 
@@ -112,39 +108,38 @@ export default function InputRegUserInfo({ userId: superId, setSuperId, setSuper
         console.log('onBtnClick');
         // 통신 -> id가 중복되거나 닉네임이 중복되면 상태 변경.
         // 1: 성공 -1: id 중복 -2: 닉네임 중복 -3: 둘다 중복
-        await axios.post('/api/user/check/info', { userLoginId: id, userNick: nick })
+        await axiosInstance.post('/api/user/info', { loginId: id, nick: nick, pw: pw })
             .then(res => {
-                const value = res.data.value;
-                console.log(value);
+                const key = res.data.key;
+                console.log(key);
 
-                if (value === 1) {
-                    setSuperId(id);
-                    setSuperNick(nick);
-                    setSuperPw(pw);
+                if (res.data.code > 0) {
+                    if (res.data.code === 496) {
+                        setIsIdPassed(false);
+                        refArr.find(ref => ref.identity === 'id')?.ref.current?.focus();
+                        return;
+
+                    }
+                    if (res.data.code === 495) {
+                        setIsNickPassed(false);
+                        refArr.find(ref => ref.identity === 'nick')?.ref.current?.focus();
+                        return;
+                    }
+                    if (res.data.code === 494) {
+                        setIsIdPassed(false);
+                        refArr.find(ref => ref.identity === 'id')?.ref.current?.focus();
+                        setIsNickPassed(false);
+                        return;
+                    }
+                }
+
+                if (key) {
+                    setServKey(key);
                     btnEnabled && setIsPassedUserInfo(true);
                     return;
                 }
 
 
-            }).catch(err => {
-                if (err.code === 496) {
-                    setIsIdPassed(false);
-                    refArr.find(ref => ref.identity === 'id')?.ref.current?.focus();
-                    return;
-
-                }
-                if (err.code === 495) {
-                    setIsNickPassed(false);
-                    refArr.find(ref => ref.identity === 'nick')?.ref.current?.focus();
-                    return;
-                }
-                if (err.code === 494) {
-                    setIsIdPassed(false);
-                    refArr.find(ref => ref.identity === 'id')?.ref.current?.focus();
-                    setIsNickPassed(false);
-                    return;
-                }
-            }
-            );
+            }).catch(console.error);
     }
 }

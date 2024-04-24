@@ -16,11 +16,13 @@ export interface InputIdProps {
 export interface InputPasswordProps {
     userId: string;
     setUserIdStatus: React.Dispatch<React.SetStateAction<{ status: number | undefined; userId: string; }>>;
+    servKey: string;
 }
 
 export interface InputUserStatusProps {
     userIdStatus: { status: number | undefined, userId: string };
     setUserIdStatus: React.Dispatch<React.SetStateAction<{ status: number | undefined; userId: string; }>>;
+    setServKey: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface InputLineProps {

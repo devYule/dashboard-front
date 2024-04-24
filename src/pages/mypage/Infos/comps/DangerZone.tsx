@@ -12,11 +12,23 @@ export default function DangerZone() {
         <div className="dangerZone">
             <p id="title">Danger Zone</p>
             <div className="part">
-                <button className="changePassword pointer btns" onClick={() => setModalType(ModalType.CHANGE_PASSWORD)}>비밀번호 변경</button>
-                <button className="resetWidget pointer btns" onClick={() => setModalType(ModalType.RESET_WIDGET)}>위젯 초기화</button>
-                <button className="withdraw pointer btns" onClick={() => setModalType(ModalType.WITHDRAW)}>회원 탈퇴</button>
+                <button className="changePassword pointer btns" onClick={onChangePwBtnClick}>비밀번호 변경</button>
+                <button className="resetWidget pointer btns" onClick={onResetWidgetBtnClick}>위젯 초기화</button>
+                <button className="withdraw pointer btns" onClick={onWithdrawBtnClick}>회원 탈퇴</button>
             </div>
         </div>
-
     )
+
+    function onChangePwBtnClick() {
+        setModalType(ModalType.CHANGE_PASSWORD);
+
+    }
+    function onResetWidgetBtnClick() {
+        setModalType(ModalType.RESET_WIDGET);
+    }
+    function onWithdrawBtnClick() {
+        setModalType(ModalType.WITHDRAW);
+    }
+
+
 }

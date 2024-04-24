@@ -6,12 +6,14 @@ import InputLine from "./InputLine";
 import axios from "axios";
 import { InputPasswordProps } from "../../../interfaces/Interfaces";
 import TitleText from "./TitleText";
+import { axiosInstance } from "../../../pbl/AxiosUtil";
+import { error } from "console";
 
 
 
 
 
-export default function InputPassword({ userId, setUserIdStatus }: InputPasswordProps) {
+export default function InputPassword({ userId, setUserIdStatus, servKey }: InputPasswordProps) {
     console.log('render InputPassword');
     const [password, setPassword] = useState('');
     const [passwordInputStyle, setPasswordInputStyle] = useState<CSSProperties>({ borderColor: 'black' });
@@ -35,11 +37,12 @@ export default function InputPassword({ userId, setUserIdStatus }: InputPassword
     );
 
     function onBackBtnClick() {
-        setUserIdStatus({ status: undefined, userId: userId});
+        setUserIdStatus({ status: undefined, userId: userId });
     }
 
 
     function passwordOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+        if (passwordInputStyle.borderColor === 'red') setPasswordInputStyle({ borderColor: 'black' });
         setPassword(e.target.value);
         setEnterRecorder(false);
     }
@@ -54,20 +57,26 @@ export default function InputPassword({ userId, setUserIdStatus }: InputPassword
 
     }
     async function submitOnClick() {
-        if(password.length < 6 || password.length > 20) return;
+        if (password.length < 6 || password.length > 20) return;
         console.log('submitOnClick');
 
-        await axios.post('/api/user/pw', { userPw: password }).then(res => {
-            console.log(res.data);
-            console.log(res.data ? 'true' : 'false');
-            if (res.data) {
-                localStorage.setItem('user', JSON.stringify(res.data));
-                navi('/main');
-            }
-            else {
-                setPasswordInputStyle({ borderColor: 'red' });
-            }
-        }).catch(console.error);
+        await axiosInstance.post('/api/user/pw', { key: servKey, pw: password })
+            .then(res => {
+                console.log(res.data);
+                console.log(res.data ? 'true' : 'false');
+
+                if (res.data.code > 0) {
+                    setPasswordInputStyle({ borderColor: 'red' });
+                    if (res.data.code === 501) {
+                        console.log('key is blank');
+                        window.location.reload();
+                    }
+                } else {
+                    // todo TEST
+                    localStorage.setItem('at', res.data.at);
+                    window.location.reload();
+                }
+            }).catch(console.error);
 
     }
 }

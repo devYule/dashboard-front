@@ -5,18 +5,22 @@ import DirectionBtn from './DirectionBtn';
 import axios from 'axios';
 import MailValidBtn from './MailValidBtn';
 import InputLineMail from './InputLineMail';
+import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../../../pbl/AxiosUtil';
 
-export default function InputRegEmail({ setIsAllDone, setSuperEmail }:
-    { setIsAllDone: React.Dispatch<React.SetStateAction<boolean>>, setSuperEmail: React.Dispatch<React.SetStateAction<string>> }) {
+export default function InputRegEmail({ servKey }:
+    { servKey: string }) {
 
 
     const [email, setEmail] = useState<string>('');
     const [isValidating, setIsValidating] = useState<boolean>(false);
     const [emailChecker, setEmailChecker] = useState<boolean>(true);
 
-    const [validateToken, setValidateToken] = useState<string>('');
     const [code, setCode] = useState<string>('');
     const [codeChecker, setCodeChecker] = useState<boolean>(true);
+    const [isRequested, setIsRequested] = useState<boolean>(false);
+
+    const navi = useNavigate();
 
     const mailContainerClassName = isValidating ? styles.code : styles.mail;
 
@@ -81,23 +85,41 @@ export default function InputRegEmail({ setIsAllDone, setSuperEmail }:
         }
     }
     async function onBtnClick() {
+        if (isRequested) return;
         if (!isValidating) {
             if (email.length < 7 || email.length > 35) return;
             // 이메일 인증 요청
-            await axios.post('/api/user/check/mail', { userMail: email })
+            setIsRequested(true);
+            await axiosInstance.post('/api/user/mail', { key: servKey, mail: email })
                 .then(res => {
-                    setValidateToken(res.data.token);
+                    if (res.data.code > 0) {
+                        if (res.data.code === 493) {
+                            setEmailChecker(false);
+                        }
+                        return;
+                    }
                     setIsValidating(true);
-                }).catch(console.error);
+                }).catch(console.error)
+                .finally(() => setIsRequested(false));
+
             return;
         }
 
         if (code.length !== 6) return;
-        await axios.get(`/api/user/check/mail/${code}`, { params: { tk: validateToken } })
+        await axiosInstance.post(`/api/user/mail/check`, { key: servKey, code: code })
             .then(res => {
-                if (res.data.value === 1) {
-                    setSuperEmail(email);
-                    setIsAllDone(true);
+                if (res.data.code > 0) {
+                    if (res.data.code === 491) {
+                        window.location.reload();
+                    }
+                    if (res.data.code === 492) {
+                        setCodeChecker(false);
+                    }
+                    return;
+                }
+                if (res.data.at) {
+                    localStorage.setItem('at', res.data.at);
+                    window.location.reload();
                     return;
                 }
                 setCodeChecker(false);

@@ -9,8 +9,8 @@ export default function LoginContainer() {
 
     return (
         <div className={styles.container}>
-                    <div className={styles.logo}>
-            <Logo />
+            <div className={styles.logo}>
+                <Logo />
             </div>
             <LoginForm />
             <About />

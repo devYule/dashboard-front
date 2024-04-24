@@ -9,24 +9,11 @@ export default function Register({ userId }: { userId: string }) {
     const navi = useNavigate();
 
     const [id, setId] = useState(userId);
-    const [nick, setNick] = useState('');
-    const [pw, setPw] = useState('');
-    const [email, setEmail] = useState('');
 
     const [isPassedUserInfo, setIsPassedUserInfo] = useState(false);
-    const [isAllDone, setIsAllDone] = useState(false);
 
+    const [servKet, setServKey] = useState('');
 
-    useEffect(() => {
-        if (isAllDone) {
-            const userData = {
-                id, nick, pw, email
-            };
-            localStorage.setItem('user', JSON.stringify(userData));
-            navi('/main', { replace: true });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAllDone]);
 
 
 
@@ -36,10 +23,9 @@ export default function Register({ userId }: { userId: string }) {
                 !isPassedUserInfo ?
                     <InputRegUserInfo
                         userId={id}
-                        setSuperId={setId} setSuperNick={setNick} setSuperPw={setPw}
-                        setIsPassedUserInfo={setIsPassedUserInfo} />
+                        setIsPassedUserInfo={setIsPassedUserInfo} setServKey={setServKey} />
                     :
-                    <InputRegEmail setIsAllDone={setIsAllDone} setSuperEmail={setEmail} />
+                    <InputRegEmail  servKey={servKet} />
             }
 
         </>

@@ -48,12 +48,20 @@
 // 
 // ------------------------------------------------- @mixins -------------------------------------------------
 // 
-
+.widget {
+  border: 1px solid red;
+  width: 50px;
+  height: 50px;
+  align-self: center;
+  justify-self: center;
+}
 
 .mainContainer {
 
+
   display: flex;
   flex-direction: column;
+
 
 
   .header {
@@ -89,7 +97,7 @@
       #searchBarItem {
         min-width: 265px;
         width: 35%;
-        max-width: 450px;
+        max-width: 550px;
         height: 100%;
         margin: 28px 0;
         border: 2px solid black;
@@ -125,26 +133,29 @@
       }
     }
 
-    
+
   }
 
 
 }
+
 .widgetContainer {
 
   margin: 0 60px 70px 60px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(166.4px, 13.6%));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 16%));
   gap: 15px;
   justify-content: center;
+  align-content: start;
+  grid-auto-flow: dense;
 
-  .widget-item {
-    @include widgetRadius;
+  .m-widget {
     border: 1px solid red;
-    min-height: 166.4px;
+    margin: 0;
   }
 }
+
 .rightSidebarContainer {
 
   // display: flex;

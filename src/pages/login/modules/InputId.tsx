@@ -4,10 +4,11 @@ import InputLine from "./InputLine";
 import axios from "axios";
 import { InputUserStatusProps } from "../../../interfaces/Interfaces";
 import TitleText from "./TitleText";
+import { axiosInstance } from "../../../pbl/AxiosUtil";
 
 
 
-export default function InputId({ userIdStatus, setUserIdStatus }: InputUserStatusProps) {
+export default function InputId({ userIdStatus, setUserIdStatus, setServKey }: InputUserStatusProps) {
     console.log('render InputId');
     const [id, setId] = useState('');
     const [enterRecorder, setEnterRecorder] = useState(false);
@@ -53,19 +54,21 @@ export default function InputId({ userIdStatus, setUserIdStatus }: InputUserStat
     // 통신 결과가 1이면 비번입력창 & -1이면 아이디 틀림, 0이면 회원가입 폼 -> url 이동 없이 구현.
 
     async function submitOnClick() {
-        if(btnDisabled) return;
+        if (btnDisabled) return;
         console.log('submitOnClick');
         // setIsCorrect((await axios.post('/api/user/id', { userLoginId: id })).data);
 
         // const res = await axios.post('/api/user/id', { userLoginId: id });
 
-        await axios.post('/api/user/id', { userLoginId: id })
+        await axiosInstance.post('/api/user/id', { loginId: id })
             .then(res => {
-                const value = res.data.value;
-                console.log(value);
-
-                setUserIdStatus({ status: value, userId: id });
+                if (res.data.code === 499) {
+                    // id not exists
+                    setUserIdStatus({ status: 0, userId: id });
+                } else {
+                    setServKey(res.data.key);
+                    setUserIdStatus({ status: 1, userId: id });
+                }
             }).catch(console.error);
-
     };
 }
