@@ -78,6 +78,8 @@ export interface WidgetInter {
     order: number;
     width: number;
     height: number;
+    title: string;
+    memo: string;
     url: string;
     isShown: boolean;
 }
