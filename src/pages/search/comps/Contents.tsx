@@ -1,201 +1,78 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
 import { useNavigate } from "react-router-dom";
+import { allSites, allSitesColors } from "../../../interfaces/Interfaces";
 
 interface OrderedSitesRef {
-    contents: ContentsRef[]
+    siteId: number;
+    contents: ContentsRef[];
 }
 
 interface ContentsRef {
     title: string;
     link: string;
-    contents: string[];
+    content: string[];
     category: string;
     iconPath: string;
     subTitle: string;
-    isBookmarked: number;
+    bookmarkId: number;
 }
 
-const initDatas: any[] = [
-    { title: 'test1', content: 'test1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 contenttest1 content', isBookmarked: false },
-    { title: 'test2', content: 'test2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 contenttest2 content', isBookmarked: false },
-    { title: 'test3', content: 'test3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 contenttest3 content', isBookmarked: true },
-    { title: 'test4', content: 'test4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 contenttest4 content', isBookmarked: false },
-    { title: 'test5', content: 'test5 content', isBookmarked: false },
-    { title: 'test6', content: 'test6 content', isBookmarked: false },
-    { title: 'test7', content: 'test7 content', isBookmarked: false },
-    { title: 'test8', content: 'test8 content', isBookmarked: true },
-    { title: 'test9', content: 'test9 content', isBookmarked: false },
-    { title: 'test10', content: 'test10 content', isBookmarked: false },
-    { title: 'test11', content: 'test11 content', isBookmarked: false },
-    { title: 'test12', content: 'test12 content', isBookmarked: false },
-    { title: 'test13', content: 'test13 content', isBookmarked: false },
-    { title: 'test14', content: 'test14 content', isBookmarked: false },
-    { title: 'test15', content: 'test15 content', isBookmarked: true },
-    { title: 'test16', content: 'test16 content', isBookmarked: false },
-    { title: 'test17', content: 'test17 content', isBookmarked: false },
-    { title: 'test18', content: 'test18 content', isBookmarked: false },
-    { title: 'test19', content: 'test19 content', isBookmarked: false },
-    { title: 'test20', content: 'test20 content', isBookmarked: false },
-];
+const maxSize = {
+    titleMaxSize: 30,
+    contentsSize: 300,
+}
+
 
 enum BtnTypes {
     NONE, BOOKMAKRED, ADD, SUCCESS
 }
 
-/* 
-
-/ ---------------------------- response data example ----------------------------- /
-
-[
-    [
-        {
-            "title": [
-                "[매경test 합격 후기] 매경테스트 난이도 및 시사용어 공부법"
-            ],
-            "link": "https://in.naver.com/fnhelp/contents/internal/685937062712576?areacode=ink*A&query=test",
-            "content": [
-                "3일 전안녕하세요 여러분, 금융권 및 은행권 취업 준비를 하시는 분들이라면 '매경test' 자격증을 따는 경우가 많은데요. 대기업과 공기업 채용 시 우대는 물론, 대학 졸업 논문 및 시험 대체와 학점은행제의 학점인정, 고교 학교생활기록부 기재 등으로 활용 범위가 넓기 때문입니다. 그래서 오늘은 취업에서 안정적인 합격을 위한 매경..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": null,
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "버피테스트 효과 / 다이어트 운동 Burpee Test 칼로리 소모량"
-            ],
-            "link": "https://in.naver.com/apunis323/contents/internal/682515372225248?areacode=ink*A&query=test",
-            "content": [
-                "1주 전안녕하세요 워니파파버피루프입니다. 오늘은 우리의 건강한 몸매 유지 비결 중 하나, 바로 버피테스트에 대해 이야기해보려고 합니다. 다이어트와 체력 향상을 위해 많은 분들이 도전하지만, 그 효과와 칼로리 소모량에 대해서는 잘 모르시는 분들이 많더라고요. 다이어트 운동 버피테스트 효과/칼로리 버피테스트란? Burpee ..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": null,
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "등가운데통증 원인은 목디스크? 증상 자가진단 TEST"
-            ],
-            "link": "https://in.naver.com/kokhospital/contents/internal/671337708597344?areacode=ink*A&query=test",
-            "content": [
-                "2024.03.12.목디스크는 목통증 외에도 다양한 부위에 증상이 나타날 수 있기에 초기 진단에 어려움을 겪을 수 있습니다. 디스크로 인해 발생할 수 있는 증상들인 등가운데통증, 두통, 날개뼈나 어깨통증, 손저림 등의 증상이 있다면 대부분 해당 부위에 문제가 발생한 것이라 생각하여 그에 대한 치료를 진행하게 되는데요.  이렇다 보니..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": null,
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "2024학년도 시매쓰 영재통합반 초3 선발 TEST 안내"
-            ],
-            "link": "https://blog.naver.com/cmath_club/223368204453",
-            "content": [
-                "2024학년도 영재통합반 선발 TEST 안내 초등 저학년의 경우 사고력수학 NC를 활용해 창조적이고 자유로운 사고방식을 발달시켜 더 넓은 지적 용량을 구축해 나가는 것이 중요하죠. 이를 토대로 초등 고학년이 되었을때는 빠른 진도와 함께 깊이 있는 이해력을 길러낼수 있어요. 영재교육의 혁신! 2024학년도 영재통합반 선발 안내 교육의 목표는 단순히 암기..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAyMDA1MTlfMTAz%2FMDAxNTg5ODc0MDU5OTI3.HosD96SswBAigSLr8he24yV98aSF-Gp48Qc5bqRR8IMg.p8BNlm9cgOOB5P-5ZLHLzco_4cmAfPOVtht6NflYc30g.JPEG.cmath_club%2F%2525BD%2525C3%2525B8%2525C5%2525BE%2525B2.jpg&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "논문통계이해 - TOST two one sided tests -equivalence test 동등성 검증"
-            ],
-            "link": "https://blog.naver.com/lucifer246/223425849931",
-            "content": [
-                "equivalence test TOST (two one sided tests) 동등성에 대한 결론을 내리기 위한 검증은 equivalence test 을 활용한다. Schuirmann’s (1987) 는 동등성 검증을 위해서 TOST (two one sided tests) 를 제안하였다. 이 검증을 사용하여 집단간 평균 차이가 실제로 어느정도로 큰 차이인지 실증할수 있다. 또한 작은 평균 차이에 대해서 동등하다고 결론내릴수 있다. equivalence 를..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAxODAxMDhfNTQg%2FMDAxNTE1MzYwMjAwNjI4.4rmbSqSfRs7UFdiYC0gA0mV-J04XqXRADo-73wTgl8Qg.WpumLilJ2FC6C14XhbEYCaYGg55OGRVc3mXo4WAfGo0g.JPEG.lucifer246%2FprofileImage.jpg&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "영어쑥쑥어학원 정기 SR test 우수학생 포상~"
-            ],
-            "link": "https://blog.naver.com/olibie9/223344043053",
-            "content": [
-                "우리 영어쑥쑥어학원에서는 원서정독반, 5-6학년 브릿지반 아이들을 대상으로 3개월에 한번씩 정기 SR test를 보고 있습니다. SR test (Star reading test) 란? 미국에 본사를 두고 전세계 학교 및 기관에서 사용중인 르네상스에서 제공되는 리딩레벨 테스트입니다. 시험자의 정답속도와 정확도에 따라 다음문제가 달라지는 방식으로 34문제 를 푸는 테스트푼 후..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAyMzEyMTVfMTM1%2FMDAxNzAyNTY2NDI4Mzk4.g9JxH593zqRJet6U0bQOj1Ixj33byLgyNXszX7LKjf0g.aPvvWs1JR3HpXlGWlibuhKvnJCm36j1QYxOAnd_XHSMg.JPEG.olibie9%2FprofileImage.jpg&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "[미국 대학 입시분석] Test-optional 제도 말기의 SAT 준비 방법"
-            ],
-            "link": "https://blog.naver.com/edusolomon/223317296641",
-            "content": [
-                "이 Post에서는 Test-optional 제도의 말기에서 SAT를 준비하는 방법에 대해 살펴 보도록 하겠습니다. 한국으로는 중3~고1, 미국으로는 고등학교 9~10학년 학생들에게 Standardized Test에서 성공 가능성을 극대화하기 위해 취해야 할 세 가지 중요한 단계가 있습니다: 1. 자신의 장점에 맞는 를 선택합니다. SAT와 ACT는 비슷하지만 형식과 내용이 다르며..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAxOTEyMTZfMjYg%2FMDAxNTc2NDY1ODg2MDk1.UU9tHWZgnjbrOgBzu4ZVhhD6H1pXhX6pP4hFMhpBzmEg.fSOm_WHYTBm4F_eq4rxzNBS8R58pzzqF0N4eqQbkXbgg.JPEG.edusolomon%2Fbg_fff.jpg&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "초등영어시험 Primary English Test 공식 론치!"
-            ],
-            "link": "https://blog.naver.com/britishcouncilkorea/223373992147",
-            "content": [
-                "The right test at the right time 학생들의 성장에 따라 영어 학습, 지도, 평가 방법 또한 진화해야 합니다. 작년 영국문화원 개원 50주년을 맞아 'Young Learner Test'라는 가칭으로 시범 운영(piloting test)을 진행하며 소규모 그룹에 먼저 선보였고, 2024년에는 'Primary English '라는 정식 명칭과 함께 초등 영어 시장에 새로운 시험을..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogpfthumb.phinf.naver.net%2FMjAyMDAzMjVfMzkg%2FMDAxNTg1MDk2MjcyMDIz.Y__HYJXPsvGo9xBNJ_ItRPCNl8h7fcEndUZS0MLHsA8g.guK42H3wHBcWEvA0eUGzR6Cg5Q87X1EgL8p-dWBwDAQg.PNG.britishcouncilkorea%2FBritish%252BCouncil_Social%252BMedia%252BProfile%252BPictures_Blue.png&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "[매경test 합격 후기] 매경테스트 난이도 및 시사용어 공부법"
-            ],
-            "link": "https://blog.naver.com/fnhelp/223423361925",
-            "content": [
-                "안녕하세요 여러분, 금융권 및 은행권 취업 준비를 하시는 분들이라면 '매경test' 자격증을 따는 경우가 많은데요. 대기업과 공기업 채용 시 우대는 물론, 대학 졸업 논문 및 시험 대체와 학점은행제의 학점인정, 고교 학교생활기록부 기재 등으로 활용 범위가 넓기 때문입니다. 그래서 오늘은 취업에서 안정적인 합격을 위한 매경 자격증에 대해서 알아보는 시간을..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=https%3A%2F%2Fblogpfthumb-phinf.pstatic.net%2FMjAxOTA2MjBfMjk5%2FMDAxNTYxMDIxNjYwNDk3.iW7cLxHIyA_yf1R2L0Cqg6S1Ps_jYib9Fuj7D7rzemQg.x7AoB7qlaLz3CCJZuUS1e1p2oVoZ0X2oXIRwU8NOKVYg.JPEG.fnhelp%2Fkakao-yellow-profile%252Bimage.jpg&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        },
-        {
-            "title": [
-                "MAP Test, 제주 국제학교 입학시험 맵테스트 알아보기!"
-            ],
-            "link": "https://cafe.naver.com/youhakcamp/772185?art=ZXh0ZXJuYWwtc2VydmljZS1uYXZlci1zZWFyY2gtY2FmZS1wcg.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjYWZlVHlwZSI6IkNBRkVfVVJMIiwiY2FmZVVybCI6InlvdWhha2NhbXAiLCJhcnRpY2xlSWQiOjc3MjE4NSwiaXNzdWVkQXQiOjE3MTM5NzMwMTU2MDd9.qSGq15kAZO7kfE-Oy95hI6vdiYP0h7Z-fybkLVaaXqU",
-            "content": [
-                "오늘은 제주 국제학교 뿐만 아니라 다양한 국내 국제학교가 채택하고 있는 입학시험인 MAP Test, 맵테스트에 대해 알려드릴게요! MAP Test 정보, 구성 MAP Test는 Measures of Academic Progress의 줄임말로, 학업성취도 평가라고 생각하시면 됩니다. 컴퓨터 기반의 적응형 평가이기 때문에 학생들이 고르는 정답과 오답에 따라 실시간으로 문제의 난이도가..."
-            ],
-            "category": "COMMUNITY",
-            "iconPath": "https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2FMjAyMTAyMjBfMjAw%2FMDAxNjEzODAyMjcyNjgx.CdwxELQm6KNFlZhP4-SCR6SL96tf6G3lCfGkG_nKbtwg.OEW272Ee-jEi5GRB9bG-VwdMBhnbpx2JvZvUoYneEZcg.PNG%2F%25EC%25B9%25B4%25ED%258E%2598_%25EB%258C%2580%25ED%2591%259C%25EC%259D%25B4%25EB%25AF%25B8%25EC%25A7%2580.png&type=f54_54",
-            "subTitle": null,
-            "isBookmarked": 0
-        }
-    ]
-]
-
-*/
-
 
 
 export default function Contents({ query }: { query: string | null }) {
 
-    const [contents, setcontents] = useState<OrderedSitesRef[]>([]);
+
+    const [contents, setContents] = useState<OrderedSitesRef[]>([]);
     const [addedIdx, setAddedIdx] = useState<number>(-1);
+    const [bookmarkMemo, setBookmarkMemo] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const [typingIdx, setTypingIdx] = useState<number>(-1);
+    const [timeoutIds, setTimeoutIds] = useState<NodeJS.Timeout[]>([]);
+
+    const typingText = 'Loading...';
+
     const navi = useNavigate();
+
+    let timeoutId: NodeJS.Timeout | undefined;
+
+
+
+
 
     useEffect(() => {
         async function fetchData() {
-
+            setIsLoading(true);
+            // 500 ~ 1000
+            setTimeout(() => {
+                let addedTime = 0;
+                for (let i = 0; i < typingText.length; i++) {
+                    const time = (Math.random() * 150) + 151;
+                    console.log('time: ', time);
+                    setTimeoutIds([...timeoutIds, setTimeout(() => {
+                        setTypingIdx(i);
+                    }, addedTime += time)]);
+                }
+                for (let i = typingText.length; i > -1; i--) {
+                    const time = (Math.random() * 150) + 151;
+                    console.log('time: ', time);
+                    setTimeoutIds([...timeoutIds, setTimeout(() => {
+                        setTypingIdx(i);
+                    }, addedTime += time)]);
+                }
+            });
             await axiosInstance.get(`/api/search?query=${query}`)
                 .then(res => {
                     console.log(res.data.code);
@@ -205,10 +82,17 @@ export default function Contents({ query }: { query: string | null }) {
                             navi('/mypage?err=site-is-empty');
                         }
                     }
-                })
+                    if (res.data.length > -1) {
+                        setContents(res.data);
+                        setIsLoading(false);
+                        if (!isLoading) {
+                            timeoutIds.forEach((id) => clearTimeout(id));
+                        }
+                    }
+                });
+
         }
         fetchData();
-
     }, [query]);
 
 
@@ -224,59 +108,189 @@ export default function Contents({ query }: { query: string | null }) {
     </svg>
 
     return (
-        <div className="contentsContainer">
-            {contents.map((content, idx) =>
-                <div key={idx} className="content">
-                    <p className="title" onMouseEnter={() => titleOnMouseEnter(idx + 'thBtn')} onMouseLeave={() => titleOnMouseLeave(idx + 'thBtn')}>
-                        {/* {content.title} */}
-                        {
-                            addedIdx === idx ?
-                                <button className="bookmarkBtns">{successImg}</button>
-                                :
-                                <button id={idx + 'thBtn'} className="bookmarkBtns pointer" style={{ visibility: 'hidden' }}
-                                    onClick={content => bookmarBtnOnClick(content, idx)}>
-                                    {/* {content.isBookmarked === 1 ? bookmarkedImg : addImg} */}
-                                </button>
-                        }
-
-                    </p>
-
-                    <p className="text">
-                        {/* {content.content} */}
-                    </p>
-
-                    <hr />
+        <>
+            {
+                isLoading &&
+                <div className="contentsModal">
+                    <p className="typing-ani">{typingIdx > -1 && typingText.substring(0, typingIdx)}</p>
+                    <p className="cursor">{'ㅣ'}</p>
                 </div>
-            )}
-        </div>
+            }
+            <div className="contentsContainer">
+                {
+                    contents.map((eachSite: OrderedSitesRef) => {
+                        return (
+                            <div key={eachSite.siteId} className={`site-box ${allSites[eachSite.siteId].title}`}>
+                                {/* 각 사이트별 이름 */}
+                                <div className="siteNameContainer" style={allSitesColors[eachSite.siteId]}>
+                                    <p className="siteName">{allSites[eachSite.siteId].title}</p>
+                                </div>
+                                {/* 해당 사이트의 각 컨텐츠 */}
+                                {eachSite.contents.map((content: ContentsRef, idx: number) => {
+                                    // if (content.title.length < 1 && content.content.length < 1) return <></>;
+
+                                    return (
+                                        <div className="item" key={idx}>
+                                            {/* title start */}
+                                            <p className="title" onMouseEnter={() => titleOnMouseEnter(eachSite.siteId + '' + idx + 'thBtn')} onMouseLeave={() => titleOnMouseLeave(eachSite.siteId + '' + idx + 'thBtn')} onClick={() => onClickPlusRank(eachSite.siteId)}>
+                                                {content.iconPath && content.iconPath.length > 0 ? (
+                                                    <>
+                                                        <img className="icon" src={content.iconPath} alt="icon" />
+                                                    </>
+                                                )
+
+                                                    :
+                                                    <div className="icon">
+                                                        {
+                                                            eachSite.siteId === 0 ?
+
+                                                                <svg viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M4.95829 1.75V5.25H4.52726L2.52295 2.50195H2.48703V5.25H2.04163V1.75H2.47266L4.48415 4.50488H4.52007V1.75H4.95829Z" fill="black" />
+                                                                    <rect x="0.5" y="0.5" width="6" height="6" stroke="black" />
+                                                                </svg>
+                                                                :
+                                                                <svg viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M4.71339 2.75479C4.66934 2.62412 4.61127 2.50702 4.53919 2.40352C4.46844 2.29872 4.38368 2.20944 4.2849 2.1357C4.18745 2.06195 4.07666 2.00566 3.95252 1.96685C3.82838 1.92803 3.69222 1.90863 3.54405 1.90863C3.30111 1.90863 3.08019 1.96944 2.88129 2.09106C2.6824 2.21268 2.52422 2.39187 2.40675 2.62865C2.28928 2.86542 2.23055 3.15588 2.23055 3.50004C2.23055 3.8442 2.28995 4.13467 2.40875 4.37144C2.52756 4.60821 2.68841 4.7874 2.8913 4.90902C3.0942 5.03064 3.32246 5.09145 3.57609 5.09145C3.81102 5.09145 4.01793 5.04294 4.1968 4.9459C4.377 4.84757 4.51716 4.70913 4.61728 4.53058C4.71873 4.35074 4.76945 4.13919 4.76945 3.89595L4.92162 3.92701H3.68822V3.50004H5.25V3.92701C5.25 4.25434 5.17792 4.53899 5.03375 4.78093C4.89092 5.02288 4.69336 5.21049 4.44108 5.34375C4.19012 5.47572 3.90179 5.54171 3.57609 5.54171C3.21301 5.54171 2.89397 5.4589 2.61899 5.29329C2.34535 5.12768 2.13177 4.8922 1.97826 4.58686C1.82609 4.28152 1.75 3.91924 1.75 3.50004C1.75 3.18564 1.79338 2.90294 1.88015 2.65193C1.96825 2.39964 2.09239 2.18486 2.25257 2.00761C2.41276 1.83035 2.60231 1.6945 2.82122 1.60005C3.04014 1.5056 3.28108 1.45837 3.54405 1.45837C3.7603 1.45837 3.96186 1.49007 4.14874 1.55347C4.33696 1.61557 4.50448 1.7042 4.65132 1.81935C4.79949 1.93321 4.92296 2.06971 5.02174 2.22885C5.12052 2.3867 5.1886 2.56201 5.22597 2.75479H4.71339Z" fill="black" />
+                                                                    <rect x="0.5" y="0.5" width="6" height="6" stroke="black" />
+                                                                </svg>
+                                                        }
+                                                    </div>
+
+                                                }
+                                                <a target="_blank" rel="noopener noreferrer" className="titleLink" href={content.link}>
+                                                    {stringSlicer(content.title, maxSize.titleMaxSize)}
+                                                </a>
+                                                {
+                                                    addedIdx === idx ?
+                                                        <button className="bookmarkBtns">{successImg}</button>
+                                                        :
+                                                        <button
+                                                            id={eachSite.siteId + '' + idx + 'thBtn'}
+                                                            className="bookmarkBtns pointer"
+                                                            style={{ visibility: 'hidden' }}
+                                                            onClick={() => bookmarBtnOnClick(content, eachSite.siteId, idx)}>
+                                                            {content.bookmarkId > 0 ? bookmarkedImg : addImg}
+                                                        </button>
+                                                }
+                                            </p>
+                                            {/* title end */}
+
+                                            {/* content start */}
+                                            <div className="content-container">
+                                                {
+                                                    content.content.length > 1 ?
+                                                        <>
+                                                            <p className="date"> {stringSlicer(content.content[0], maxSize.contentsSize)}</p>
+                                                            {content.content.map((c, idx) => {
+                                                                if (idx === 0) return <></>;
+                                                                return <p className="text">{stringSlicer(c, maxSize.contentsSize)}</p>
+                                                            })}
+                                                        </>
+                                                        :
+                                                        <p className="text">
+                                                            {stringSlicer(content.content[0], maxSize.contentsSize)}
+                                                        </p>
+                                                }
+                                            </div>
+                                            {/* content end */}
+                                            <hr />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )
+                    })
+                }
+            </div>
+            <div className="search-modal">
+
+            </div>
+        </>
     );
-    function bookmarBtnOnClick(content: any, idx: number) {
-        if (content.isBookmarked) {
+
+    function stringSlicer(text: string, maxSize: number) {
+        if (!text) return text;
+        return text.length > maxSize ? text.substring(0, maxSize) : text;
+    }
+    async function bookmarBtnOnClick(content: ContentsRef, siteId: number, idx: number) {
+        if (!isModalOpen) {
+            setIsModalOpen(true);
+            return;
+        }
+        if (content.bookmarkId > 0) {
             // 북마크 해제, 성공이면 isBookmarked 를 false 로 변경
+            console.log('bookmarkId: ', content.bookmarkId);
+            axiosInstance.delete(`/api/bm?id=${content.bookmarkId}`)
+                .then(res => {
+                    if (res.data.code > 0) return;
+                    if (res.data.value === content.bookmarkId) {
+
+                        setContents(contents.map((c: OrderedSitesRef) => {
+                            if (c.siteId !== siteId) return c;
+                            return {
+                                siteId: siteId,
+                                contents: c.contents.map((cc: ContentsRef, i: number) => {
+                                    if (i !== idx) return cc;
+
+                                    return { ...cc, bookmarkId: 0 };
+                                })
+                            }
+                        }));
+
+                    }
+                });
 
         } else {
             // 북마크 등록, 성공이면 isBookmarked 를 true 로 변경
 
+            // 메모 입력창 필요
+            await axiosInstance.post('/api/bm', { title: content.title, url: content.link, memo: bookmarkMemo })
+                .then(res => {
+
+                    if (res.data.code > 0) {
+                        return;
+                    }
+
+                    setContents(contents.map((c: OrderedSitesRef) => {
+                        if (c.siteId !== siteId) return c;
+                        return {
+                            siteId: siteId,
+                            contents: c.contents.map((cc: ContentsRef, i: number) => {
+                                if (i !== idx) return cc;
+
+                                return { ...cc, bookmarkId: res.data.value };
+                            })
+                        }
+                    }));
+
+
+                }).catch(console.error);
+
         }
 
-        setcontents(contents.map((c: any, i: number) => {
-            if (i === idx) {
-                return { ...c, isBookmarked: !c.isBookmarked };
-            }
-            return c;
-        }))
-
+        timeoutId && clearTimeout(timeoutId);
         setAddedIdx(idx);
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
             setAddedIdx(-1);
         }, 2000);
-
-    }
-    function titleOnMouseEnter(btnId: string) {
-        document.getElementById(btnId)?.style.setProperty('visibility', 'visible');
-    }
-    function titleOnMouseLeave(btnId: string) {
-        document.getElementById(btnId)?.style.setProperty('visibility', 'hidden');
     }
 
 }
+
+function titleOnMouseEnter(btnId: string) {
+    document.getElementById(btnId)?.style.setProperty('visibility', 'visible');
+}
+function titleOnMouseLeave(btnId: string) {
+    setTimeout(() => {
+        document.getElementById(btnId)?.style.setProperty('visibility', 'hidden');
+    }, 100);
+}
+
+function onClickPlusRank(siteId: number) {
+    axiosInstance.get(`/api/user/rank?id=${siteId}`)
+        .then(res => {
+            console.log('did');
+        });
+}
+
+

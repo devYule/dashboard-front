@@ -317,16 +317,18 @@
       width: 100%;
       position: sticky;
       top: 0;
+
       font-family: 'Inter';
       font-style: normal;
       text-align: center;
       font-weight: 800;
       font-size: 18px;
-      line-height: 36px;
+      line-height: 50px;
 
       color: #000000;
 
       margin-top: 7%;
+      margin-bottom: 7%;
     }
 
     .widget {
@@ -380,6 +382,7 @@
       // border: 1px solid red;
       display: flex;
       flex-direction: column;
+      gap: 7px;
 
       section {
         // border: 1px solid blue;
@@ -392,11 +395,11 @@
         }
 
         #title {
-          margin: 0;
+          margin: 0 5px 5px 5px;
           font-family: 'Inter';
           text-align: left;
           font-weight: 800;
-          font-size: 20px;
+          font-size: 15px;
           line-height: 23.5px;
 
           width: 70%;
@@ -409,6 +412,9 @@
           border: 1px solid #000000;
           background-color: #000000;
           color: rgb(245, 245, 245);
+
+
+          align-self: center;
 
           width: 35px;
           height: 20px;
@@ -423,8 +429,8 @@
 
         #memo {
           width: 95%;
-          margin-left: 5px;
-          margin-right: 5px;
+          margin: 0 5px 15px 5px;
+
           font-family: 'Inter';
           text-align: left;
           font-weight: 400;
@@ -433,9 +439,9 @@
         }
 
         #url {
-          width: 95%;
-          margin-left: 5px;
-          margin-right: 5px;
+          width: 100%;
+          margin: 0 5px 20px 5px;
+
           font-family: 'Inter';
           text-align: left;
           font-weight: 400;

@@ -75,27 +75,4 @@ export default function SearchContainer() {
 
     }
 
-    // function onScroll() {
-    //     console.log('scroll');
-    //     setScrolling(window.scrollY);
-    //     console.log(scrolling);
-    //     console.log(document.querySelector('.searchContainer')?.scrollTop);
-    //     console.log(document.querySelector('.searchContainer')?.scrollHeight);
-    //     console.log(document.querySelector('.main')?.scrollHeight);
-    //     console.log(document.querySelector('#main')?.scrollHeight);
-    //     console.log(document.querySelector('.contentsContainer')?.scrollHeight);
-    //     console.log(document.querySelector('.header')?.scrollHeight);
-
-    //     console.log(document.querySelector('html')?.clientHeight);
-
-    //     const a: number | undefined = document.querySelector('.header')?.scrollHeight;
-    //     const b: number | undefined = document.querySelector('.contentsContainer')?.scrollHeight;
-
-    //     if (a && b) {
-    //         console.log(b - a);
-    //     }
-
-    // }
-
-
 }
