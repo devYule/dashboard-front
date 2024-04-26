@@ -39,7 +39,7 @@ export default function SidebarLeft() {
                         gridColumn:
                             `${widget.width === 1 ? "auto / span 1" : "auto / span 2"}`,
                         gridRow: `${widget.height === 1 ? "auto / span 1" : "auto / span 2"}`,
-                        height: `${widget.height === 1 ? "200px" : "415px"}`, // need to plus 15px cause gap is 15px
+                        height: `${widget.height === 1 ? "100px" : "210px"}`, // need to plus 15px cause gap is 15px
                         width: "100%"
                     }
                 } />)}

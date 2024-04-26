@@ -1,91 +1,109 @@
-.mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .flex {
-
-        border: 1px solid red;
-        width: 100vw;
-        height: 100vh;
-        display: grid;
-        gap: 10px;
-
-        grid-template-columns: repeat(auto-fill, minmax(160px, 15%));
-        justify-content: center;
-
-        align-content: start;
-
-        grid-auto-flow: dense;
-
-        .item {
-            background-color: green;
-            border: 1px solid red;
-            grid-column: auto / span 1;
-            grid-row: auto / span 1;
-            height: 100px;
-            width: 100%;
-
-
-
-        }
-
-        .bigItem {
-            grid-row: auto / span 2;
-            height: 200px;
-        }
-
-        .latus {
-            grid-column: auto / span 2;
-        }
-    }
+@mixin sidebarBackgorund {
+  background-color: rgb(234, 238, 219);
 }
 
+@mixin widgetRadius {
+  border-radius: 5px;
+}
 
-// .mainContainer {
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     justify-content: center;
+@mixin sidebarStyle {
+  @include sidebarBackgorund;
 
-//     .flex {
-//         border: 1px solid red;
+  min-width: 355px;
 
+  height: 100vh;
+  // width: 25vh;
+  width: 25%;
 
-//         width: 100vw;
-//         height: 100vh;
-//         display: flex;
-//         flex-direction: row;
-//         align-items: start;
-//         align-content: start;
-//         justify-content: start;
-//         flex-wrap: wrap;
-//         // gap: 10px;
+  backdrop-filter: blur(7px);
+  // filter: blur(10px);
+  position: fixed;
+  top: 0;
+  right: 0;
 
-//         .item {
-//             // padding: 10px;
-//             border: 1px solid red;
-//             background-color: green;
-//             // width: calc(100vw / 6);
-//             width: 16%;
-//             // width: calc(100vw / 4);
-//             // flex-basis: 16.66666%;
-//             min-width: 200px;
-//             height: 100px;
-//             // flex-grow: 1;
-//         }
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: auto;
+  flex-direction: column;
+  align-items: center;
+}
 
-//         .bigItem {
-//             height: 200px;
-//         }
+* > .pointer {
+  cursor: pointer;
+}
 
-//         .latus {
-//             // width: calc(100vw / 3);
-//             width: 32%;
-//             // width: calc(100vw / 2);
-//             min-width: 400px;
-//             // flex-grow: 2;
-//         }
-//     }
-// }
+* {
+  list-style-type: none;
+}
+
+* {
+  padding: 0;
+}
+
+.rightSidebar {
+  @include sidebarStyle;
+  .sidebarText {
+    @include sidebarBackgorund;
+    width: 100%;
+    position: sticky;
+    top: 0;
+
+    font-family: "Inter";
+    font-style: normal;
+    text-align: center;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 50px;
+
+    color: #000000;
+
+    margin-top: 7%;
+    margin-bottom: 7%;
+  }
+
+  .r-widget {
+    margin-bottom: 9%;
+
+    display: grid;
+    grid-template-columns: repeat(2, 120px);
+    grid-template-rows: repeat(5, 120px);
+    gap: 10px 10px;
+    justify-content: center;
+
+    * {
+      @include widgetRadius;
+    }
+
+    #oneTwo {
+      grid-row: 1 / 2;
+      grid-column: 1 / 3;
+      background-color: yellow;
+    }
+
+    #twoTwo {
+      grid-row: 2 / 4;
+      grid-column: 1 / 3;
+      background-color: blue;
+    }
+
+    #oneOne {
+      grid-row: 4 / 5;
+      grid-column: 1 / 2;
+      background-color: black;
+    }
+
+    #twoOne {
+      grid-row: 4 / 6;
+      grid-column: 2 / 3;
+      background-color: green;
+    }
+
+    :last-child {
+      align-self: center;
+      justify-self: center;
+      grid-row: 5 / 6;
+      grid-column: 1 / 2;
+      width: 80%;
+    }
+  }
+}

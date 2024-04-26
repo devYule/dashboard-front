@@ -6,9 +6,8 @@ import TextLogo from "./comps/TextLogo";
 import './styles/search.scss';
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import CSSTransition from "react-transition-group/CSSTransition"
-import _ from "lodash";
 
-interface ScrollSize {
+interface ScrollSize {  
     before: number;
     after: number;
 }

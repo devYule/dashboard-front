@@ -1,50 +1,10 @@
-import './sketchbook.scss';
 
-export default function SidebarLeft() {
+export default function WidgetPage() {
 
-    return (
-        <>
-            <div className="mainContainer">
+  return (
+    <>
+   
+    </>
+  );
 
-                <div className="flex">
-                    <div className="item">
-
-                    </div>
-                    <div className="item latus">
-
-                    </div>
-                    <div className="item">
-
-                    </div>
-
-                    <div className="item bigItem">
-
-                    </div>
-                    <div className="item">
-
-                    </div>
-                    <div className="item">
-
-                    </div>
-                    <div className="item">
-
-                    </div>
-                    <div className="item bigItem latus">
-
-                    </div>
-                    <div className="item">
-
-                    </div>
-                    <div className="item latus">
-
-                    </div>
-                    <div className="item">
-
-                    </div>
-                </div>
-
-            </div>
-
-        </>
-    )
 }

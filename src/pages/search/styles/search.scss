@@ -31,7 +31,7 @@ hr {
   // width: 25vh;
   width: 25%;
 
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(7px);
   // filter: blur(10px);
   position: fixed;
   top: 0;
@@ -58,7 +58,7 @@ hr {
   border-radius: 5px;
 }
 
-// 
+//
 .searchContainer {
   display: flex;
   flex-direction: column;
@@ -89,7 +89,6 @@ hr {
       margin-left: calc(100vw / 13);
       width: 30%;
       min-width: 50px;
-
     }
 
     .searchBar {
@@ -99,11 +98,8 @@ hr {
       justify-self: center;
 
       #searchBarItem {
-
-
         width: 30vw;
         min-width: 120px;
-
 
         border: 2px solid black;
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -116,7 +112,6 @@ hr {
           width: 80%;
           margin: 2px 7px;
           font-size: 18px;
-
         }
 
         input:focus {
@@ -131,11 +126,8 @@ hr {
           background: transparent;
           border: none;
         }
-
-
       }
     }
-
   }
 
   .main {
@@ -150,25 +142,21 @@ hr {
       flex-direction: column;
       gap: 15px;
 
-
       .site-box {
-
         display: flex;
         flex-direction: column;
         gap: 7px;
 
         .siteNameContainer {
-
           align-self: flex-end;
           // naver background-color: rgb(230, 248, 203);
           // google background-color: rgb(244, 244, 244);
-          
+
           border-radius: 15px;
 
           width: 100%;
           .siteName {
-
-            font-family: 'Inter';
+            font-family: "Inter";
             font-style: normal;
             font-weight: 800;
             font-size: 35px;
@@ -184,12 +172,11 @@ hr {
 
           .title {
             display: flex;
-            font-family: 'Inter';
+            font-family: "Inter";
             font-style: normal;
             font-weight: 800;
             font-size: 20px;
             margin-bottom: 5%;
-
 
             // line-height: 36px;
             .bookmarkBtns {
@@ -197,8 +184,6 @@ hr {
               width: 15px;
               background: transparent;
               border: none;
-
-
             }
 
             .icon {
@@ -206,7 +191,6 @@ hr {
               height: 18px;
               width: 18px;
             }
-
 
             .titleLink:hover {
               animation: grow 0.2s forwards;
@@ -226,11 +210,9 @@ hr {
           .content-container {
             margin: 10px 0;
 
-
-
             .text {
               margin: 7px 0;
-              font-family: 'Inter';
+              font-family: "Inter";
               font-style: normal;
               font-weight: 400;
               font-size: 15px;
@@ -238,18 +220,11 @@ hr {
             }
           }
         }
-
       }
-
-
-
-
-
     }
   }
 
   .leftSidebarContainer {
-
     position: fixed;
 
     width: 40px;
@@ -259,7 +234,6 @@ hr {
 
     z-index: 3;
     // background-color: gray;
-
 
     .sidebarBtns {
       position: absolute;
@@ -283,41 +257,69 @@ hr {
     }
 
     .leftSidebar {
-
       @include leftSidebarStyle;
 
       .leftSidebarWidgetContainer {
-        // width: 300px;
+        width: 300px;
         height: 95%;
         display: grid;
         justify-content: center;
 
         gap: 10px;
-        // grid-template-columns: repeat(2, 1fr);
-        grid-template-columns: repeat(auto-fill, minmax(130px, 130px));
 
         margin: 20% 0;
 
-
         display: grid;
         overflow-y: scroll;
-        grid-template-columns: repeat(2, 120px);
-        grid-template-rows: repeat(auto-fill, minmax(120px, 120px));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 110px));
+        grid-auto-flow: dense;
 
-        .widget {
+        .m-widget {
           border: 1px solid black;
-          width: 118px;
-          height: 118px;
           @include widgetRadius;
+
+          .basic-info {
+            border-bottom: 0.5px dotted black;
+            display: flex;
+            flex-direction: column;
+            width: inherit;
+
+            :last-child {
+              margin-bottom: 10px;
+            }
+
+            #title {
+              font-family: "Inter";
+              font-style: normal;
+              font-weight: 800;
+              font-size: 15px;
+              line-height: 23.5px;
+              text-align: left;
+              margin: 5px 0 0px 7px;
+            }
+
+            #memo {
+              font-family: "Inter";
+              font-style: normal;
+              font-weight: 400;
+              font-size: 11px;
+              line-height: 19.5px;
+              text-align: left;
+              margin: 0 5px 3px 7px;
+            }
+
+            #url {
+              display: none;
+            }
+
+            .inner-w {
+              word-wrap: break-word;
+            }
+          }
         }
       }
     }
-
-
   }
-
-
 }
 
 .contentsModal {
@@ -331,11 +333,12 @@ hr {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(7px);
   border-radius: 20px;
 
+
   .typing-ani {
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 800;
     font-size: 35px;
@@ -348,7 +351,7 @@ hr {
     right: 7px;
 
     margin: 0;
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 200;
     font-size: 35px;
@@ -364,6 +367,6 @@ hr {
     100% {
       opacity: 1;
     }
-
   }
+
 }

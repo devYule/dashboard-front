@@ -88,7 +88,7 @@ export enum ModalType {
     NONE, CHANGE_PASSWORD, RESET_WIDGET, WITHDRAW
 }
 
-export interface Bookmkarks {
+export interface Bookmark {
     id: number;
     title: string;
     url: string;
