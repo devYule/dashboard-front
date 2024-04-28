@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
 import { useNavigate } from "react-router-dom";
 import { allSites, allSitesColors } from "../../../interfaces/Interfaces";
+import { BookmarkNotExists, OvalBtn } from "../../../globalStyle/GlobalStyles";
 
 interface OrderedSitesRef {
   siteId: number;
@@ -20,7 +21,7 @@ interface ContentsRef {
 
 const maxSize = {
   titleMaxSize: 30,
-  contentsSize: 300,
+  contentsSize: 500,
 };
 
 enum BtnTypes {
@@ -35,7 +36,13 @@ interface AddedIndex {
   idx: number;
 }
 
-export default function Contents({ query }: { query: string | null }) {
+export default function Contents({
+  query,
+  isScroll,
+}: {
+  query: string | null;
+  isScroll: boolean;
+}) {
   const [contents, setContents] = useState<OrderedSitesRef[]>([]);
   const [addedIdx, setAddedIdx] = useState<AddedIndex>({ siteId: -1, idx: -1 });
   const [bookmarkMemo, setBookmarkMemo] = useState<string>("");
@@ -44,6 +51,10 @@ export default function Contents({ query }: { query: string | null }) {
 
   const [typingIdx, setTypingIdx] = useState<number>(-1);
   // const [timeoutIds, setTimeoutIds] = useState<NodeJS.Timeout[]>([]);
+
+  //
+
+  //
 
   const typingText = "Loading...";
 
@@ -294,6 +305,26 @@ export default function Contents({ query }: { query: string | null }) {
                     </div>
                     {/* content end */}
                     <hr />
+                    {idx === eachSite.contents.length - 1 && (
+                      <div style={{ margin: "0 0 10% 0" }}>
+                        <OvalBtn
+                          className="pointer"
+                          style={{
+                            position: "relative",
+                            left: "88%",
+                            width: "auto",
+                          }}
+                          onClick={() =>
+                            window.open(
+                              allSites[eachSite.siteId].getSearchUrl(query),
+                              "_blank"
+                            )
+                          }
+                        >
+                          &nbsp;More...&nbsp;
+                        </OvalBtn>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -304,7 +335,6 @@ export default function Contents({ query }: { query: string | null }) {
       <div className="search-modal"></div>
     </>
   );
-
   function stringSlicer(text: string, maxSize: number) {
     if (!text) return text;
     return text.length > maxSize ? text.substring(0, maxSize) : text;

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Bookmark } from "../../../interfaces/Interfaces";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
+import { OvalBtn } from "../../../globalStyle/GlobalStyles";
 
 export default function BookmarkComp({
   bookmark,
@@ -39,13 +40,13 @@ export default function BookmarkComp({
       )}
       <div>
         <p id="title">{bookmark.title}</p>
-        <button
+        <OvalBtn
           className="pointer"
           id="btn"
           onClick={() => onClick(onClickParam)}
         >
           {btnName}
-        </button>
+        </OvalBtn>
       </div>
       <p id="memo">{bookmark.memo}</p>
       <a href={bookmark.url} target="_blank" rel="noreferrer noopener">

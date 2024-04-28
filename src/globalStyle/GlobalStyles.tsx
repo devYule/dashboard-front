@@ -49,3 +49,22 @@ export const WidgetDelBtn = styled.button`
   background: inherit;
   border: none;
 `;
+
+export const OvalBtn = styled.button`
+  margin-left: 30px;
+  border-radius: 15px;
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: rgb(245, 245, 245);
+
+  align-self: center;
+
+  width: 35px;
+  height: 20px;
+
+  font-family: "Inter";
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 19.5px;
+`;

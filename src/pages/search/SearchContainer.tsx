@@ -25,6 +25,8 @@ export default function SearchContainer() {
     const [searchParam, setSearchParam] = useSearchParams();
     const query = searchParam.get('q');
 
+    const curScroll = document.querySelector('.searchContainer')?.scrollTop as number
+    const scrollHegiht = document.querySelector('.searchContainer')?.scrollHeight as number
 
     // const scrollStyle = scrollDirection === 'down' ? ' miniHeader' : ' fullHeader';
 
@@ -48,14 +50,13 @@ export default function SearchContainer() {
             </CSSTransition>
             <SidebarMainContainer />
             <div className="main" id="main">
-                <Contents query={query} />
+                <Contents query={query} isScroll = {curScroll > 0} />
             </div>
         </div>
     );
     function onScroll() {
 
-        const curScroll = document.querySelector('.searchContainer')?.scrollTop as number
-        const scrollHegiht = document.querySelector('.searchContainer')?.scrollHeight as number
+      
         // setScrollDirection(scrolling > curScroll ? 'up' : 'down');
         setScrolling(curScroll);
         setBeforeScrollHeight(scrollHegiht);
