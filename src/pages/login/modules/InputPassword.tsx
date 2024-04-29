@@ -25,14 +25,14 @@ export default function InputPassword({ userId, setUserIdStatus, servKey }: Inpu
     }
 
     return (
-        <div className={styles.pw}>
-            <section className={styles.back}>
-                <DirectionBtn className={styles.btns} onClick={onBackBtnClick} disabled={false} btnStyle={undefined} btnDirection={'left'} />
+        <div className="pw">
+            <section className="back">
+                <DirectionBtn className="btns" onClick={onBackBtnClick} disabled={false} btnStyle={undefined} btnDirection={'left'} />
                 <p>{userId}</p>
             </section>
             <TitleText >비밀번호</TitleText>
             <InputLine value={password} style={passwordInputStyle} type="password" onChange={passwordOnChange} onKeyDown={e => password.length > 5 && onKeyDown(e)} autoFocus={true} placeholder="" disabled={false} />
-            <DirectionBtn className={styles.btns} onClick={submitOnClick} disabled={password.length < 6 || password.length > 20} btnStyle={svgVisiable} btnDirection={'right'} />
+            <DirectionBtn className="btns" onClick={submitOnClick} disabled={password.length < 6 || password.length > 20} btnStyle={svgVisiable} btnDirection={'right'} />
         </div>
     );
 

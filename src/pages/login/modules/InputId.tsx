@@ -1,7 +1,6 @@
 import { CSSProperties, useState } from "react";
 import styles from '../styles/Login.module.css'
 import InputLine from "./InputLine";
-import axios from "axios";
 import { InputUserStatusProps } from "../../../interfaces/Interfaces";
 import TitleText from "./TitleText";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
@@ -23,11 +22,11 @@ export default function InputId({ userIdStatus, setUserIdStatus, setServKey }: I
 
 
     return (
-        <div className={styles.id}>
+        <div className="id">
             <TitleText>아이디</TitleText>
             <InputLine style={inputColorStyle} type={"text"} value={id} onChange={idOnChange} onKeyDown={e => id.length > 4 && onKeyDown(e)} autoFocus={true} placeholder="" disabled={false} />
             <section>
-                <button className={styles.btns} onClick={submitOnClick} disabled={btnDisabled}>
+                <button className="btns" onClick={submitOnClick} disabled={btnDisabled}>
                     <svg style={svgVisiable} width="34" height="35" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M9 26.3205L24 17.6603L9 9" stroke="black" />
                     </svg>

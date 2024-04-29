@@ -11,7 +11,7 @@ export default function LoginForm() {
     const [servKey, setServKey] = useState<string>('');
 
     return (
-        <div className={styles.loginForm}>
+        <div className="loginForm">
             {
                 userIdStatus.status === 1 ? <InputPassword userId={userIdStatus.userId} setUserIdStatus={setUserIdStatus} servKey={servKey} /> :
                     userIdStatus.status === 0 ?

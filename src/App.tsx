@@ -9,9 +9,6 @@ import './pbl/animator.scss';
 import '../src/pages/search/styles/search.scss';
 import SearchContainer from "./pages/search/SearchContainer";
 import { useState } from "react";
-import { createGlobalStyle } from "styled-components";
-export const GlobalStyle = createGlobalStyle`
-`;
 
 const App = () => {
   console.log('App -> Render!!!');

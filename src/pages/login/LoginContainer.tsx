@@ -1,9 +1,8 @@
-import styles from './styles/Login.module.css';
 import About from './comps/About';
 import LoginForm from './comps/LoginForm';
 import Logo from './comps/Logo';
 import { useEffect } from 'react';
-
+import './styles/login.scss';
 
 
 export default function LoginContainer() {
@@ -14,8 +13,8 @@ export default function LoginContainer() {
     }, [])
 
     return (
-        <div className={styles.container}>
-            <div className={styles.logo}>
+        <div className="container">
+            <div className="logo">
                 <Logo />
             </div>
             <LoginForm />

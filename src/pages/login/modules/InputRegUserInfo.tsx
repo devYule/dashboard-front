@@ -39,10 +39,10 @@ export default function InputRegUserInfo({ userId: superId, setIsPassedUserInfo,
     const svgVisiable: CSSProperties = {
         opacity: btnEnabled ? 1 : 0.2,
     }
-    const placeholderClass = styles.placeholder;
+    const placeholderClass = "placeholder";
 
     return (
-        <div className={styles.info}>
+        <div className="info">
             <TitleText>회원가입</TitleText>
             <InputLineReg
                 className={id.length < 1 ? placeholderClass : undefined}
@@ -64,7 +64,7 @@ export default function InputRegUserInfo({ userId: superId, setIsPassedUserInfo,
                 style={styleChecker(isCheckPwPassed)} type='password' value={checkPw}
                 onChange={e => onChangeCheckPw(e, setCheckPw, undefined)} onKeyDown={e => onKeyDown(e, 3)}
                 autoFocus={false} placeholder='비밀번호 확인 ( 6 ~ 20자 사이 )' ref={refCheckPw} disabled={false} />
-            <DirectionBtn className={styles.btns} onClick={submitOnClick} disabled={!btnEnabled} btnStyle={svgVisiable} btnDirection={'right'} />
+            <DirectionBtn className="btns" onClick={submitOnClick} disabled={!btnEnabled} btnStyle={svgVisiable} btnDirection={'right'} />
         </div>
     );
 
