@@ -13,8 +13,8 @@ export default function LoginContainer() {
     }, [])
 
     return (
-        <div className="container">
-            <div className="logo">
+        <div className="loginContainer">
+            <div className="logo login-logo">
                 <Logo />
             </div>
             <LoginForm />

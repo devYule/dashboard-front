@@ -279,8 +279,13 @@ hr {
         grid-auto-flow: dense;
 
         .m-widget {
-          border: 1px solid black;
-          @include widgetRadius;
+          border: 1px solid rgb(146, 161, 155);
+          margin: 0;
+      
+          border-radius: 7px;
+      
+          display: flex;
+          flex-direction: column;
 
           .basic-info {
             border-bottom: 0.5px dotted black;
@@ -318,6 +323,24 @@ hr {
 
             .inner-w {
               word-wrap: break-word;
+            }
+           
+          }
+          .shot-info {
+            justify-self: center;
+            align-self: center;
+            margin: 6% 0;
+            height: 71%;
+            width: 93%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2%;
+            overflow: hidden;
+            img {
+              height: 100%;
+              width: 100%;
+              object-fit: contain;
             }
           }
         }

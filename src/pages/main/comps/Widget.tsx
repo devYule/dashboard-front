@@ -86,6 +86,7 @@ export default function Widget({
     </>
   );
   function onMouseEnter() {
+    if(!widgetDel) return;
     setAddClass("hoverAnimation");
     const timeout = setTimeout(() => {
       setPopupDelBtn(true);
@@ -93,6 +94,7 @@ export default function Widget({
     setPopupTimeouts([...popupTimeouts, timeout]);
   }
   function onMouseLeave() {
+    if(!widgetDel) return;
     popupTimeouts.forEach((timeout) => {
       clearTimeout(timeout);
     });
@@ -107,6 +109,7 @@ export default function Widget({
   }
 
   async function widgetDelBtnOnClick() {
+    if(!widgetDel) return;
     await axiosInstance.delete(`/api/widget/${widget.id}`).then((res) => {
       if (res.data.code > 0) return;
       if (res.data.value > 0) {
