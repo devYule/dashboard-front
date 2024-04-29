@@ -181,6 +181,7 @@ export default function SidebarLeft() {
           <Widget
             key={widget.id}
             widget={widget}
+            titleMaxLength={8}
             gridStyle={{
               gridColumn: `${
                 widget.width === 1 ? "auto / span 1" : "auto / span 2"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { WidgetInter } from "../../../interfaces/Interfaces";
 import { WidgetDelBtn } from "../../../globalStyle/GlobalStyles";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
@@ -7,6 +7,9 @@ export default function Widget({
   widget,
   gridStyle,
   widgetDel,
+  titleMaxLength,
+  memoMaxLength,
+  urlMaxLength,
 }: {
   widget: WidgetInter;
   gridStyle?: {
@@ -19,6 +22,9 @@ export default function Widget({
     prev: WidgetInter[];
     setter: React.Dispatch<React.SetStateAction<WidgetInter[]>>;
   };
+  titleMaxLength?: number;
+  memoMaxLength?: number;
+  urlMaxLength?: number;
 }) {
   // const sizeClassName: string | undefined = widget.isShown ? 'widget-item' : undefined;
 
@@ -26,6 +32,11 @@ export default function Widget({
   const [popupDelBtn, setPopupDelBtn] = useState<boolean>(false);
   const [popupTimeouts, setPopupTimeouts] = useState<NodeJS.Timeout[]>([]);
   const [isDelBtnHover, setIsDelBtnHover] = useState<boolean>(false);
+  
+  const titleMaxL = titleMaxLength ? titleMaxLength : 20;
+  const memoMaxL = memoMaxLength ? memoMaxLength : 15;
+  const urlMaxL = urlMaxLength ? urlMaxLength : 30;
+
 
   return (
     <>
@@ -62,18 +73,18 @@ export default function Widget({
         {/* 위젯에 포함된 url, 메모, 제목 등 여기서 사용하여 위젯 모양 만들기 */}
         <div className="basic-info">
           <p className="inner-w" id="title">
-            {widget.title.length > 20
-              ? widget.title.substring(0, 20) + "..."
+            {widget.title.length > titleMaxL
+              ? widget.title.substring(0, titleMaxL) + "..."
               : widget.title}
           </p>
           <p className="inner-w" id="memo">
-            {widget.memo.length > 15
-              ? widget.memo.substring(0, 15) + "..."
+            {widget.memo.length > memoMaxL
+              ? widget.memo.substring(0, memoMaxL) + "..."
               : widget.memo}
           </p>
           <p className="inner-w" id="url">
-            {widget.url.length > 30
-              ? widget.url.substring(0, 30) + "..."
+            {widget.url.length > urlMaxL
+              ? widget.url.substring(0, urlMaxL) + "..."
               : widget.url}
           </p>
         </div>
