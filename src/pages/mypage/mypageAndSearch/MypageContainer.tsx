@@ -33,6 +33,8 @@ export default function MypageConatiner() {
     const [userInfos, setUserInfos] = useState<UserInfosRef>({ pic: '', nick: '', mail: '', sites: [] });
 
     useEffect(() => {
+        const titleEl = document.getElementsByTagName('title')[0];
+        titleEl.innerText = 'My page';
         // 유저 정보 가져오기
         // 유저 사진, 유저 닉네임, 유저 메일, 유저 사이트
 

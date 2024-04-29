@@ -22,6 +22,11 @@ export default function SearchContainer() {
         enter: 100, exit: 100
     };
 
+    useEffect(() => {
+        const titleEl = document.getElementsByTagName('title')[0];
+        titleEl.innerText = 'Search';
+    }, [])
+
     const [searchParam, setSearchParam] = useSearchParams();
     const query = searchParam.get('q');
 

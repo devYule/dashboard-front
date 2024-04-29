@@ -18,6 +18,8 @@ export default function Main() {
   const [addedWidget, setAddedWidget] = useState<WidgetInter | null>(null);
 
   useEffect(() => {
+    const titleEl = document.getElementsByTagName('title')[0];
+    titleEl.innerText = 'Dashboard';
     getWidgets(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
