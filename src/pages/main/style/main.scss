@@ -161,9 +161,9 @@ button {
   .hoverAnimation {
     animation: hoverAnimation 0.1s linear forwards;
   }
-.leaveAnimation {
-  animation: leaveAnimation 0.1s linear;
-}
+  .leaveAnimation {
+    animation: leaveAnimation 0.1s linear;
+  }
   .m-widget {
     border: 1px solid rgb(146, 161, 155);
     margin: 0;
@@ -215,6 +215,23 @@ button {
 
       .inner-w {
         word-wrap: break-word;
+      }
+    }
+    .shot-info {
+      justify-self: center;
+      align-self: center;
+      margin: 2% 0;
+      height: 91%;
+      width: 93%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 2%;
+      overflow: hidden;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
       }
     }
   }

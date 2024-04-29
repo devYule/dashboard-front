@@ -25,6 +25,7 @@ export default function Main() {
   useEffect(() => {
     if (addedWidget) {
       setWidgets([addedWidget, ...widgets]);
+      setAddedWidget(null);
     }
   }, [addedWidget]);
 
@@ -77,6 +78,7 @@ export default function Main() {
           height: w.height,
           url: w.url,
           isShown: w.isShown,
+          shot: w.shot,
         };
       });
       setWidgets([...widgets, ...newWidgets]);

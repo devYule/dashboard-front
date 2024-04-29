@@ -20,7 +20,7 @@ interface ContentsRef {
 }
 
 const maxSize = {
-  titleMaxSize: 30,
+  titleMaxSize: 50,
   contentsSize: 500,
 };
 
@@ -265,7 +265,7 @@ export default function Contents({
                           className="bookmarkBtns pointer"
                           style={{ visibility: "hidden" }}
                           onClick={() =>
-                            bookmarBtnOnClick(content, eachSite.siteId, idx)
+                            bookmarkBtnOnClick(content, eachSite.siteId, idx)
                           }
                         >
                           {content.bookmarkId > 0 ? bookmarkedImg : addImg}
@@ -339,15 +339,15 @@ export default function Contents({
     if (!text) return text;
     return text.length > maxSize ? text.substring(0, maxSize) : text;
   }
-  async function bookmarBtnOnClick(
+  async function bookmarkBtnOnClick(
     content: ContentsRef,
     siteId: number,
     idx: number
   ) {
-    if (!isModalOpen) {
-      setIsModalOpen(true);
-      return;
-    }
+    // if (!isModalOpen) {
+    //   setIsModalOpen(true);
+    //   return;
+    // }
     if (content.bookmarkId > 0) {
       // 북마크 해제, 성공이면 isBookmarked 를 false 로 변경
       console.log("bookmarkId: ", content.bookmarkId);

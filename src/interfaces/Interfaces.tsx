@@ -90,6 +90,7 @@ export interface WidgetInter {
   memo: string;
   url: string;
   isShown: boolean;
+  shot?: string;
 }
 
 export enum ModalType {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { WidgetInter } from "../../../interfaces/Interfaces";
 import { WidgetDelBtn } from "../../../globalStyle/GlobalStyles";
-import { TimeoutProps } from "react-transition-group/Transition";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
 
 export default function Widget({
@@ -26,21 +25,28 @@ export default function Widget({
   const [addClass, setAddClass] = useState<string>("");
   const [popupDelBtn, setPopupDelBtn] = useState<boolean>(false);
   const [popupTimeouts, setPopupTimeouts] = useState<NodeJS.Timeout[]>([]);
+  const [isDelBtnHover, setIsDelBtnHover] = useState<boolean>(false);
 
   return (
     <>
       <div
-        className={"m-widget " + addClass}
+        className={"m-widget pointer " + addClass}
         style={gridStyle}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onClick={onWidgetClick}
       >
         {popupDelBtn && (
           <div style={{ position: "absolute" }}>
-            <WidgetDelBtn className="pointer" onClick={widgetDelBtnOnClick}>
+            <WidgetDelBtn
+              className="pointer"
+              onClick={widgetDelBtnOnClick}
+              onMouseEnter={() => setIsDelBtnHover(true)}
+              onMouseLeave={() => setIsDelBtnHover(false)}
+            >
               <svg
-                width="15"
-                height="15"
+                width="17"
+                height="17"
                 viewBox="0 0 35 35"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,8 +62,8 @@ export default function Widget({
         {/* 위젯에 포함된 url, 메모, 제목 등 여기서 사용하여 위젯 모양 만들기 */}
         <div className="basic-info">
           <p className="inner-w" id="title">
-            {widget.title.length > 12
-              ? widget.title.substring(0, 12) + "..."
+            {widget.title.length > 20
+              ? widget.title.substring(0, 20) + "..."
               : widget.title}
           </p>
           <p className="inner-w" id="memo">
@@ -66,11 +72,16 @@ export default function Widget({
               : widget.memo}
           </p>
           <p className="inner-w" id="url">
-            {widget.url.length > 12
-              ? widget.url.substring(0, 12) + "..."
+            {widget.url.length > 30
+              ? widget.url.substring(0, 30) + "..."
               : widget.url}
           </p>
         </div>
+        {widget.shot && (
+          <div className="shot-info">
+            <img src={`http://localhost:8080/pic/${widget.shot}`} alt=""></img>
+          </div>
+        )}
       </div>
     </>
   );
@@ -78,7 +89,7 @@ export default function Widget({
     setAddClass("hoverAnimation");
     const timeout = setTimeout(() => {
       setPopupDelBtn(true);
-    }, 1500);
+    }, 1100);
     setPopupTimeouts([...popupTimeouts, timeout]);
   }
   function onMouseLeave() {
@@ -87,7 +98,12 @@ export default function Widget({
     });
     setPopupTimeouts([]);
     setPopupDelBtn(false);
+    isDelBtnHover && setIsDelBtnHover(false);
     setAddClass("leaveAnimation");
+  }
+  function onWidgetClick() {
+    if (isDelBtnHover) return;
+    window.open(widget.url, "_blank");
   }
 
   async function widgetDelBtnOnClick() {

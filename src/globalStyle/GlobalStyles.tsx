@@ -44,8 +44,8 @@ export const BookmarkNotExists = styled.p<{ topVal?: string }>`
 export const WidgetDelBtn = styled.button`
   z-index: 1;
   position: relative;
-  bottom: 9px;
-  right: 7px;
+  bottom: 8px;
+  right: 8px;
   background: inherit;
   border: none;
 `;

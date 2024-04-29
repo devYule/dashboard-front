@@ -155,7 +155,7 @@ export default function WidgetPage() {
       .then((res) => {
         if (res.data.code > 0) return;
         setAddWidget({
-          id: res.data.value,
+          id: res.data.id,
           order: 0,
           width: columnSize,
           height: rowSize,
@@ -163,6 +163,7 @@ export default function WidgetPage() {
           memo: b.memo,
           url: b.url,
           isShown: true,
+          shot: res.data.shot
         });
       });
   }

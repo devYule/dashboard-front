@@ -167,7 +167,6 @@ hr {
           }
         }
 
-
         .item {
           margin: 2% 0 2% 0;
 
@@ -193,8 +192,12 @@ hr {
               width: 18px;
             }
 
+            .titleLink {
+              text-align: start;
+            }
             .titleLink:hover {
               animation: grow 0.2s forwards;
+              text-align: start;
             }
 
             @keyframes grow {
@@ -337,7 +340,6 @@ hr {
   backdrop-filter: blur(7px);
   border-radius: 20px;
 
-
   .typing-ani {
     font-family: "Inter";
     font-style: normal;
@@ -369,5 +371,4 @@ hr {
       opacity: 1;
     }
   }
-
 }
