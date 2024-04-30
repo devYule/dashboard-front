@@ -197,7 +197,6 @@ export default function Contents({
                       onMouseLeave={() =>
                         titleOnMouseLeave(eachSite.siteId + "" + idx + "thBtn")
                       }
-                      onClick={() => onClickPlusRank(eachSite.siteId)}
                     >
                       {content.iconPath && content.iconPath.length > 0 ? (
                         <>
@@ -253,6 +252,7 @@ export default function Contents({
                         rel="noopener noreferrer"
                         className="titleLink"
                         href={content.link}
+                        onClick={() => onClickPlusRank(eachSite.siteId)}
                       >
                         {stringSlicer(content.title, maxSize.titleMaxSize)}
                       </a>
