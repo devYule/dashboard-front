@@ -69,7 +69,7 @@ export default function Main() {
   async function getWidgets(page: number) {
     if (page < 1) return;
     await axiosInstance.get(`/api/widget/${page}`).then((res) => {
-      console.log(res.data);
+      
       const newWidgets = res.data.map((w: WidgetInter) => {
         return {
           id: w.id,

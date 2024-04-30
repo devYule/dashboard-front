@@ -1,59 +1,67 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 
 export const axiosInstance: AxiosInstance = axios.create({
-    timeout: 30000,
+  timeout: 30000,
 });
 axiosInstance.interceptors.response.use(
-    (response: AxiosResponse) => response,
-    async (err: AxiosError) => {
+  (response: AxiosResponse) => response,
+  async (err: AxiosError) => {
+    const { config, response } = err;
 
-        const { config, response } = err;
+    if (
+      (response?.status === 401 ||
+        (response &&
+          response?.status === 500 &&
+          JSON.stringify(response.data).indexOf("JWT") > -1) ||
+        (response?.status === 500 &&
+          (JSON.stringify(err?.response?.data).indexOf("ExpiredJwtException") >
+            -1 ||
+            JSON.stringify(err?.response?.data).indexOf(
+              "MalformedJwtException"
+            )))) &&
+      config
+    ) {
+      // const isToeknProblem = err.message.indexOf("ExpiredJwtException");
+      // console.log(isToeknProblem);
+      // localStorage.removeItem('at');
+      // delete config.headers.Authorization;
+      if (localStorage.getItem("at") === "undefined") {
+        localStorage.clear();
+        window.location.reload();
+        return;
+      }
 
-        
-        if ((response?.status === 401 ||
-            (response?.status === 500 && (JSON.stringify(err?.response?.data).indexOf("ExpiredJwtException") > -1 ||
-                JSON.stringify(err?.response?.data).indexOf("MalformedJwtException")))) && config) {
+      await axiosInstance
+        .get("/api/user/rt")
+        .then((res) => {
+          config.headers.Authorization = "Bearer " + res.data.at;
+          localStorage.setItem("at", res.data.at);
+          window.location.reload();
+          return axiosInstance(config);
+        })
+        .catch((err) => {
+          console.error(err);
 
-            // const isToeknProblem = err.message.indexOf("ExpiredJwtException");
-            // console.log(isToeknProblem);
-            // localStorage.removeItem('at');
-            // delete config.headers.Authorization;
-            if (localStorage.getItem('at') === 'undefined') {
-                localStorage.clear();
-                window.location.reload();
-                return;
-            }
+          localStorage.clear();
+          window.location.reload();
 
-            await axios.get('/api/user/rt')
-                .then(res => {
-
-                    config.headers.Authorization = 'Bearer ' + res.data.at;
-                    localStorage.setItem('at', res.data.at);
-                    return axiosInstance(config);
-                })
-                .catch(err => {
-                    console.error(err);
-
-                    localStorage.clear();
-                    window.location.reload();
-
-                    return err;
-                });
-        }
+          return err;
+        });
     }
-)
+  }
+);
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    const at = localStorage.getItem('at');
-    if (at) {
-        config.headers.Authorization = `Bearer ${at}`;
-    }
+  const at = localStorage.getItem("at");
+  if (at) {
+    config.headers.Authorization = `Bearer ${at}`;
+  }
 
-    return config;
+  return config;
 });
 
-
-
-export const apiList = {
-
-};
-
+export const apiList = {};
