@@ -55,6 +55,7 @@ export enum SidebarActions {
   CLICK = "click",
   WIDGET = "widget",
   BOOKMARK = "bookmark",
+  TYPE = "type",
 }
 
 export enum SidebarDirections {
