@@ -34,7 +34,7 @@ export default function SeacrhBar({ type }: { type: number }) {
     <div className="searchBar">
       <div id="searchBarItem" style={style}>
         <input
-          value={inputValue}
+          value={inputValue} autoFocus
           onChange={(e) => setInputValue(e.target.value)}
           onKeyUp={(e) => onKeyUp(e)}
         ></input>
