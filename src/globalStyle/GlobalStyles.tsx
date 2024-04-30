@@ -15,11 +15,9 @@ export const WidgetBtn = styled.button`
   gap: 10px 10px;
   justify-content: center;
 `;
-export const WidgetBookmarkContainer = styled.div<SelectedWidget>`
+export const WidgetBookmarkContainer = styled.div`
   display: flex;
   flex-direction: column;
-  grid-column: ${(w) => w.gridColumn};
-  grid-row: ${(w) => w.gridRow};
   width: 100%;
   height: 100%;
 `;

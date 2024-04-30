@@ -50,8 +50,6 @@ export default function WidgetPage() {
           <WidgetBookmarkContainer
             className="gridContainer bookmark"
             id={`b-${selectedWidget.id}`}
-            gridRow={selectedWidget.gridRow}
-            gridColumn={selectedWidget.gridColumn}
           >
             {bookmarks.length === 0 ? (
               <BookmarkNotExists>텅~</BookmarkNotExists>
@@ -122,19 +120,19 @@ export default function WidgetPage() {
     row: string,
     column: string
   ) {
-    await axiosInstance.get(`/api/bm/1`).then((res) => {
+    await axiosInstance.get(`/api/bm`).then((res) => {
       if (res.data.code > 0) {
         return;
       }
 
-      if (res.data.hasNext === 1) {
-        setHasNextPage(true);
-      } else {
-        setHasNextPage(false);
-      }
+      // if (res.data.hasNext === 1) {
+      //   setHasNextPage(true);
+      // } else {
+      //   setHasNextPage(false);
+      // }
       setBookmarks([
         ...bookmarks,
-        ...res.data.bookmarks.map((b: Bookmark) => {
+        ...res.data.map((b: Bookmark) => {
           return { id: b.id, title: b.title, url: b.url, memo: b.memo };
         }),
       ]);

@@ -5,10 +5,12 @@ import Widget from "./comps/Widget";
 
 import SidebarMainContainer from "./sidebar/SidebarMainContainer";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { axiosInstance } from "../../pbl/AxiosUtil";
-import { title } from "process";
-import { AddWidgetContext } from "../../pbl/Contexts";
+import {
+  AddWidgetContext,
+  SetWidgetsContext,
+  WidgetsContext,
+} from "../../pbl/Contexts";
 
 export default function Main() {
   console.log("render Main");
@@ -18,8 +20,8 @@ export default function Main() {
   const [addedWidget, setAddedWidget] = useState<WidgetInter | null>(null);
 
   useEffect(() => {
-    const titleEl = document.getElementsByTagName('title')[0];
-    titleEl.innerText = 'Dashboard';
+    const titleEl = document.getElementsByTagName("title")[0];
+    titleEl.innerText = "Dashboard";
     getWidgets(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -36,9 +38,13 @@ export default function Main() {
       <div className="header">
         <Logo />
       </div>
-      <AddWidgetContext.Provider value={setAddedWidget}>
-        <SidebarMainContainer />
-      </AddWidgetContext.Provider>
+      <WidgetsContext.Provider value={widgets}>
+        <SetWidgetsContext.Provider value={setWidgets}>
+          <AddWidgetContext.Provider value={setAddedWidget}>
+            <SidebarMainContainer />
+          </AddWidgetContext.Provider>
+        </SetWidgetsContext.Provider>
+      </WidgetsContext.Provider>
       <div className="main">
         <SearchBarContainer />
         <div className="widgetContainer">
@@ -69,7 +75,6 @@ export default function Main() {
   async function getWidgets(page: number) {
     if (page < 1) return;
     await axiosInstance.get(`/api/widget/${page}`).then((res) => {
-      
       const newWidgets = res.data.map((w: WidgetInter) => {
         return {
           id: w.id,

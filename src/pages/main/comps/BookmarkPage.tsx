@@ -30,7 +30,6 @@ export default function BookmarkPage() {
     getBookmarks();
   }, []);
 
-  
   return (
     <>
       <p className="sidebarText">북마크</p>

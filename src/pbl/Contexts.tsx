@@ -40,3 +40,7 @@ export const SetAllUserDatasContext = createContext<
 export const AddWidgetContext = createContext<
   Dispatch<SetStateAction<WidgetInter | null>>
 >(() => {});
+
+export const WidgetsContext = createContext<WidgetInter[]>([]);
+
+export const SetWidgetsContext = createContext<Dispatch<SetStateAction<WidgetInter[]>>>(() => {});

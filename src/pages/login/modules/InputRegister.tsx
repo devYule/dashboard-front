@@ -1,35 +1,31 @@
-import { useEffect, useState } from 'react';
-import InputRegUserInfo from './InputRegUserInfo';
-import InputRegEmail from './InputRegEmail';
-import { useNavigate } from 'react-router-dom';
+import { Dispatch, SetStateAction, useState } from "react";
+import InputRegUserInfo from "./InputRegUserInfo";
+import InputRegEmail from "./InputRegEmail";
 
-export default function Register({ userId }: { userId: string }) {
-    console.log('render Register');
+export default function Register({
+  userId,
+  servKey,
+  setServKey,
+}: {
+  userId: string;
+  servKey: string;
+  setServKey: Dispatch<SetStateAction<string>>;
+}) {
+  console.log("render Register");
 
-    const navi = useNavigate();
+  const [isPassedUserInfo, setIsPassedUserInfo] = useState(false);
 
-    const [id, setId] = useState(userId);
-
-    const [isPassedUserInfo, setIsPassedUserInfo] = useState(false);
-
-    const [servKet, setServKey] = useState('');
-
-
-
-
-    return (
-        <>
-            {
-                !isPassedUserInfo ?
-                    <InputRegUserInfo
-                        userId={id}
-                        setIsPassedUserInfo={setIsPassedUserInfo} setServKey={setServKey} />
-                    :
-                    <InputRegEmail  servKey={servKet} />
-            }
-
-        </>
-    );
-
-
+  return (
+    <>
+      {!isPassedUserInfo ? (
+        <InputRegUserInfo
+          userId={userId}
+          setIsPassedUserInfo={setIsPassedUserInfo}
+          setServKey={setServKey}
+        />
+      ) : (
+        <InputRegEmail servKey={servKey} />
+      )}
+    </>
+  );
 }

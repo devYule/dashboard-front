@@ -39,6 +39,10 @@ axiosInstance.interceptors.response.use(
       await axiosInstance
         .get("/api/user/rt")
         .then((res) => {
+          if(res === undefined || res.data === undefined || res.data.at === undefined) {
+            localStorage.clear();
+            window.location.reload();  
+          }
           config.headers.Authorization = "Bearer " + res.data.at;
           localStorage.setItem("at", res.data.at);
           window.location.reload();

@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { Bookmark } from "../../../interfaces/Interfaces";
 import { axiosInstance } from "../../../pbl/AxiosUtil";
 import { OvalBtn } from "../../../globalStyle/GlobalStyles";
+import { SetWidgetsContext, WidgetsContext } from "../../../pbl/Contexts";
 
 export default function BookmarkComp({
   bookmark,
@@ -19,6 +20,9 @@ export default function BookmarkComp({
     setter: Dispatch<SetStateAction<Bookmark[]>>;
   };
 }) {
+  const widgets = useContext(WidgetsContext);
+  const setWidgets = useContext(SetWidgetsContext);
+
   return (
     <section key={bookmark.id}>
       {delBtn && (
@@ -66,6 +70,9 @@ export default function BookmarkComp({
         delBtn?.setter(
           delBtn.bookmarks.filter((bookmark) => bookmark.id !== id)
         );
+      }
+      if (res.data.delWid.length > 0) {
+        setWidgets(widgets.filter((w) => !res.data.delWid.includes(w.id)));
       }
     });
   }
