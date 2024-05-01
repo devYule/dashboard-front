@@ -21,7 +21,7 @@ export default function UserPic() {
         <div className="picInfos">
             <div className="circle pointer" onClick={e => circleOnClick(e)}>
                 <input type="file" id="file" ref={fileRef} onChange={e => inputOnChange(e)} value={''} />
-                {userInfos.pic ?
+                {userInfos.pic && userInfos.pic !== 'default' ?
                     <img key={randomKey} id="pic" src={userPicFullPath} alt="pic" onMouseEnter={imgOnMouseEnter} onMouseLeave={onmouseleave} />
                     :
                     <svg viewBox="0 0 235 235" fill="none" xmlns="http://www.w3.org/2000/svg">

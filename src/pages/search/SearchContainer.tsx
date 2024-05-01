@@ -57,7 +57,7 @@ export default function SearchContainer() {
       </CSSTransition>
       <SidebarMainContainer />
       <div className="main" id="main">
-        <Contents query={query} isScroll={curScroll > 0} />
+        <Contents query={query} />
       </div>
     </div>
   );

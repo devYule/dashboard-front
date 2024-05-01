@@ -36,22 +36,14 @@ interface AddedIndex {
   idx: number;
 }
 
-export default function Contents({
-  query,
-  isScroll,
-}: {
-  query: string | null;
-  isScroll: boolean;
-}) {
+export default function Contents({ query }: { query: string | null }) {
   const [contents, setContents] = useState<OrderedSitesRef[]>([]);
   const [addedIdx, setAddedIdx] = useState<AddedIndex>({ siteId: -1, idx: -1 });
   const [bookmarkMemo, setBookmarkMemo] = useState<string>("");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [typingIdx, setTypingIdx] = useState<number>(-1);
   // const [timeoutIds, setTimeoutIds] = useState<NodeJS.Timeout[]>([]);
-
   //
 
   //
@@ -65,7 +57,6 @@ export default function Contents({
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      // 500 ~ 1000
       const timeoutIds: NodeJS.Timeout[] = [];
       setTimeout(() => {
         let addedTime = 0;
@@ -100,11 +91,6 @@ export default function Contents({
             if (res.data.code === 479) {
               navi("/mypage?err=site-is-empty");
             }
-            if (res.data.status === 500) {
-              localStorage.removeItem("at");
-              localStorage.clear();
-              window.location.reload();
-            }
           }
           if (res.data.length > -1) {
             setContents(res.data);
@@ -115,6 +101,7 @@ export default function Contents({
           timeoutIds.forEach((id) => {
             clearTimeout(id);
           });
+          document.querySelector(".searchContainer")?.scrollTo(0, 0);
         });
     }
     fetchData();
@@ -372,7 +359,6 @@ export default function Contents({
     } else {
       // 북마크 등록, 성공이면 isBookmarked 를 true 로 변경
 
-      // 메모 입력창 필요
       await axiosInstance
         .post("/api/bm", {
           title: content.title,

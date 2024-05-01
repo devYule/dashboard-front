@@ -142,11 +142,9 @@ export default function WidgetPage() {
   async function addWidget(rowSize: number, columnSize: number, b: Bookmark) {
     await axiosInstance
       .post("api/widget", {
-        order: 0,
         width: columnSize,
         height: rowSize,
         url: b.url,
-        isShown: 1,
         type: 0,
         bookmarkId: b.id,
       })
@@ -154,14 +152,12 @@ export default function WidgetPage() {
         if (res.data.code > 0) return;
         setAddWidget({
           id: res.data.id,
-          order: 0,
           width: columnSize,
           height: rowSize,
           title: b.title,
           memo: b.memo,
           url: b.url,
-          isShown: true,
-          shot: res.data.shot
+          shot: res.data.shot,
         });
       });
   }

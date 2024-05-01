@@ -74,17 +74,15 @@ export default function Main() {
 
   async function getWidgets(page: number) {
     if (page < 1) return;
-    await axiosInstance.get(`/api/widget/${page}`).then((res) => {
+    await axiosInstance.get(`/api/widget`).then((res) => {
       const newWidgets = res.data.map((w: WidgetInter) => {
         return {
           id: w.id,
-          order: w.order,
           width: w.width,
           title: w.title,
           memo: w.memo,
           height: w.height,
           url: w.url,
-          isShown: w.isShown,
           shot: w.shot,
         };
       });

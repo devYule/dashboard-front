@@ -84,13 +84,11 @@ export enum LeftSidebarActions {
 
 export interface WidgetInter {
   id: number;
-  order: number;
   width: number;
   height: number;
   title: string;
   memo: string;
   url: string;
-  isShown: boolean;
   shot?: string;
 }
 

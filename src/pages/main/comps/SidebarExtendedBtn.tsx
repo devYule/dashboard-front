@@ -135,13 +135,12 @@ export default function SidebarExtendedBtn() {
   }
 
   function logOutBtnOnClick() {
-    if (logoutBtnStack === 0) {
+    if (logoutBtnStack < 1) {
       setLogoutBtnStack(1);
       setHoverMenuId({ ...hoverMenuId, content: "한번 더 눌러주세요." });
+      return;
     }
-    if (logoutBtnStack === 1) {
-      doLogOut();
-    }
+    doLogOut();
   }
 
   async function searchTypeBtnOnclick() {

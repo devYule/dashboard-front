@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
         return;
       }
 
-      await axiosInstance
+      await axios
         .get("/api/user/rt")
         .then((res) => {
           if(res === undefined || res.data === undefined || res.data.at === undefined) {
