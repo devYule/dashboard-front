@@ -131,7 +131,6 @@ export default function SidebarExtendedBtn() {
         throw Error("server error");
       }
     });
-    return;
   }
 
   function logOutBtnOnClick() {
