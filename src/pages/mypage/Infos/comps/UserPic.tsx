@@ -13,7 +13,7 @@ export default function UserPic() {
     const userInfos = useContext(AllUserDatasContext);
     const setUserInfos = useContext(SetAllUserDatasContext);
 
-    const userPicFullPath = `http://localhost:8080/pic/${userInfos.pic}`;
+    const userPicFullPath = `http://220.89.48.242:35115/pic/${userInfos.pic}`;
 
     let timeoutKey: NodeJS.Timeout | null = null;
 
