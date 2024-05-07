@@ -31,7 +31,7 @@ export default function InputPassword({ userId, setUserIdStatus, servKey }: Inpu
                 <p>{userId}</p>
             </section>
             <TitleText >비밀번호</TitleText>
-            <InputLine value={password} style={passwordInputStyle} type="password" onChange={passwordOnChange} onKeyDown={e => password.length > 5 && onKeyDown(e)} autoFocus={true} placeholder="" disabled={false} />
+            <InputLine value={password} style={passwordInputStyle} type="password" onChange={passwordOnChange} onKeyDown={e => password.length > 5 && onKeyDown(e)} autoFocus={true} placeholder="비밀번호 ( 6 ~ 20자 사이 )" disabled={false} />
             <DirectionBtn className="btns" onClick={submitOnClick} disabled={password.length < 6 || password.length > 20} btnStyle={svgVisiable} btnDirection={'right'} />
         </div>
     );
