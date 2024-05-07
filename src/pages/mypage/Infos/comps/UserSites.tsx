@@ -213,6 +213,9 @@ export default function UserSites() {
     await axiosInstance
       .post("/api/mypage/site", { site: siteId })
       .then((res) => {
+        if(res.data.code > 0) {
+          return;
+        }
         if (res.data.value < 0 || res.data.value > 8) {
           console.log("site id length is unvalidated");
         }
