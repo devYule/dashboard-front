@@ -90,7 +90,7 @@ export default function Widget({
         </div>
         {widget.shot && (
           <div className="shot-info">
-            <img src={`http://220.89.48.242:35115/pic/${widget.shot}`} alt=""></img>
+            <img src={`http://183.102.70.166:35115/pic/${widget.shot}`} alt=""></img>
           </div>
         )}
       </div>
